@@ -1,9 +1,7 @@
-// Inicio
-let nombreUsuario = prompt ("¿Como te llamas?");
-alert (`Hola mucho gusto ${nombreUsuario}, bienvenido/a a nuestra tienda de zapatos`);
-let interes = prompt ("¿Buscas alguna marca de zapatos en especifico?");
-
 // Variables
+let interes = "si";
+let marca = 0;
+let compra = 0;
 let bucle = 0;
 let bucleZapato = 0;
 let buclePago = 0;
@@ -13,13 +11,47 @@ let underArmourPequeños = 12;
 let underArmourGrandes = 20;
 let pumaPequeños = 8;
 let pumaGrandes = 16;
+let zapato = 0;
+let unidades = 1;
 let monto = 0;
 let dinero = 1;
+let carrito = [];
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Funciones 
+const pushCarrito = () => {
+    if (compra === "si") {
+        unidades = parseInt (prompt ("¿Cuantas unidades quiere?"));
+        carrito.push({zapato, unidades, monto});
+        interes = prompt ("¿Desea seguir comprando?");
+
+        if (interes === "si") {
+            marca = prompt ("¿Que marca estas buscando?");
+        }
+        else if (interes === "no") {
+            alert ("Muchas gracias por su tiempo, vuelva pronto!");
+        }
+        else {
+        }
+    }
+    else {
+        interes = prompt ("¿Desea seguir comprando?");
+
+        if (interes === "si") {
+            marca = prompt ("¿Que marca estas buscando?");
+        }
+        else if (interes === "no") {
+            alert ("Muchas gracias por su tiempo, vuelva pronto!");
+        }
+        else {
+        }
+    }
+}
+
 const totalConDescuento = (modelo, costo, descuento) => {
     monto = costo - descuento;
-    alert (`Las ${modelo} con descuento te quedarian en ${monto}$`);
+    alert (`Los ${modelo} con descuento te quedarian en ${monto}$`);
     return monto;
 }
 
@@ -43,28 +75,286 @@ const pago = (tipo) => {
     }
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Arrays
+let jordan = [
+    {
+        modelo: "Airjordan",
+        color: "red",
+        valor: [48, 60]
+    },
+    {
+        modelo: "Airjordan",
+        color: "blue",
+        valor: [53, 65]
+    },
+    {
+        modelo: "Jordan",
+        color: "grey",
+        valor: [45, 55]
+    },
+    {
+        modelo: "Jordan",
+        color: "black",
+        valor: [55, 80]
+    }
+]
+
+let underArmourSmall = [
+    {
+        modelo: "Basketball",
+        color: "green",
+        valor: 35
+    },
+    {
+        modelo: "Running",
+        color: "pink",
+        valor: 40
+    }
+]
+
+let underArmourBig = [
+    {
+        modelo: "Training",
+        color: "white",
+        valor: 70
+    },
+    {
+        modelo: "Running",
+        color: "pink",
+        valor: 70
+    },
+    {
+        modelo: "Running",
+        color: "black",
+        valor: 75
+    },
+    {
+        modelo: "Basketball",
+        color: "multicolor",
+        valor: 90
+    },
+    {
+        modelo: "Basketball",
+        color: "red",
+        valor: 85
+    }
+]
+
+let puma = [
+    {
+        modelo: "Running",
+        color: "white",
+        valor: [38, 43, 48]
+    },
+    {
+        modelo: "Running",
+        color: "blue",
+        valor: [38, 43, 48]
+    },
+    {
+        modelo: "Running",
+        color: "red",
+        valor: [38, 43, 48]
+    },
+    {
+        modelo: "Classic",
+        color: "black",
+        valor: [45, 50, 55]
+    },
+    {
+        modelo: "Classic",
+        color: "pink",
+        valor: [40, 45, 50]
+    },
+    {
+        modelo: "Classic",
+        color: "purple",
+        valor: [43, 48, 53]
+    },
+    {
+        modelo: "Classic",
+        color: "green",
+        valor: [40, 45, 50]
+    },
+]
+
+let nike = [
+    {
+        modelo: "Dunk",
+        color: "yellow",
+        valor: [75, 80, 85]
+    },
+    {
+        modelo: "Dunk",
+        color: "red",
+        valor: [80, 85, 90]
+    },
+    {
+        modelo: "Dunk",
+        color: "blue",
+        valor: [80, 85, 90]
+    },
+    {
+        modelo: "Air",
+        color: "black",
+        valor: [90, 95, 100]
+    },
+    {
+        modelo: "Air",
+        color: "white",
+        valor: [90, 95, 100]
+    },
+    {
+        modelo: "Air",
+        color: "purple",
+        valor: [85, 90, 95]
+    },
+    {
+        modelo: "Air",
+        color: "multicolor",
+        valor: [88, 93, 110]
+    },
+    {
+        modelo: "Running",
+        color: "pink",
+        valor: [80, 85, 90]
+    },
+    {
+        modelo: "Running",
+        color: "orange",
+        valor: [75, 80, 85]
+    },
+    {
+        modelo: "Running",
+        color: "green",
+        valor: [75, 80, 85]
+    }
+]
+
+let adidas = [
+    {
+        modelo: "Adizero",
+        color: "yellow",
+        valor: [75, 80, 85]
+    },
+    {
+        modelo: "Adizero",
+        color: "pink",
+        valor: [75, 80, 85]
+    },
+    {
+        modelo: "Adizero",
+        color: "blue",
+        valor: [80, 85, 90]
+    },
+    {
+        modelo: "Lite racer",
+        color: "black",
+        valor: [105, 110, 115]
+    },
+    {
+        modelo: "Lite racer",
+        color: "grey",
+        valor: [85, 90, 95]
+    },
+    {
+        modelo: "Lite racer",
+        color: "red",
+        valor: [95, 100, 105]
+    },
+    {
+        modelo: "Ultraboost",
+        color: "white",
+        valor: [110, 115, 120]
+    },
+    {
+        modelo: "Running",
+        color: "purple",
+        valor: [80, 85, 90]
+    },
+    {
+        modelo: "Running",
+        color: "orange",
+        valor: [75, 80, 85]
+    },
+    {
+        modelo: "Running",
+        color: "green",
+        valor: [75, 80, 85]
+    }
+]
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Recorridos
+// Jordan
+let catalogoJordanPequeños = jordan.map ((producto) => `Los ${producto.modelo} ${producto.color} tienen un valor de ${producto.valor[0]}$`);
+
+let catalogoJordanGrandes = jordan.map ((producto) => `Los ${producto.modelo} ${producto.color} tienen un valor de ${producto.valor[1]}$`);
+
+
+// Under Armour
+let catalogoUnderPequeños = underArmourSmall.map ((producto) => `Los ${producto.modelo} ${producto.color} tienen un valor de ${producto.valor}$`);
+
+let catalogoUnderGrandes = underArmourBig.map ((producto) => `Los ${producto.modelo} ${producto.color} tienen un valor de ${producto.valor}$`);
+
+
+// Puma
+let catalogoPumaPequeños = puma.map ((producto) => `Los ${producto.modelo} ${producto.color} tienen un valor de ${producto.valor[0]}$`);
+
+let catalogoPumaMedianos = puma.map ((producto) => `Los ${producto.modelo} ${producto.color} tienen un valor de ${producto.valor[1]}$`);
+
+let catalogoPumaGrandes = puma.map ((producto) => `Los ${producto.modelo} ${producto.color} tienen un valor de ${producto.valor[2]}$`);
+
+
+// Nike
+let catalogoNikePequeños = nike.map ((producto) => `Los ${producto.modelo} ${producto.color} tienen un valor de ${producto.valor[0]}$`);
+
+let catalogoNikeMedianos = nike.map ((producto) => `Los ${producto.modelo} ${producto.color} tienen un valor de ${producto.valor[1]}$`);
+
+let catalogoNikeGrandes = nike.map ((producto) => `Los ${producto.modelo} ${producto.color} tienen un valor de ${producto.valor[2]}$`);
+
+
+// Adidas
+let catalogoAdidasPequeños = adidas.map ((producto) => `Los ${producto.modelo} ${producto.color} tienen un valor de ${producto.valor[0]}$`);
+
+let catalogoAdidasMedianos = adidas.map ((producto) => `Los ${producto.modelo} ${producto.color} tienen un valor de ${producto.valor[1]}$`);
+
+let catalogoAdidasGrandes = adidas.map ((producto) => `Los ${producto.modelo} ${producto.color} tienen un valor de ${producto.valor[2]}$`);
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Inicio
+let nombreUsuario = prompt ("¿Como te llamas?");
+alert (`Hola mucho gusto ${nombreUsuario}, bienvenido/a a nuestra tienda de zapatos`);
+let interesMarca = prompt ("¿Buscas alguna marca de zapatos en especifico? (marcar si o no)");
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
 // Bloque de codigo
-if (interes === "si" || interes === "Si" || interes === "SI") {
+if (interes === "si" && interesMarca === "si" || interes === "si" && interesMarca === "Si") {
 
     while (dinero !== monto) {
-        let marca = prompt ("¿Que marca estas buscando?");
+        marca = prompt ("¿Que marca estas buscando?").toLowerCase();
 
         while (bucle === 0) {
                 
                 // JORDAN
-                if ( marca === "jordan" || marca === "Jordan" || marca === "JORDAN") {
+                if ( interes === "si" && marca === "jordan") {
                     alert (`Perfecto, tenemos zapatos ${marca} para ofrecerte y con descuento`);
                     var talla = parseInt(prompt("¿Que talla de zapato usas?"));
                     
                     if (talla > 35 && talla < 41) {
-                        alert ("Tenemos:\nAirjordan red a 48$\nJordan black a 55$\nJordan grey a 45$");
-                        let zapato = prompt ("¿Cual de estos 3 zapatos te gustaria elegir?");
+                        alert (catalogoJordanPequeños.join ("\n"));
+                        let zapato = prompt ("¿Cual le gustaria elegir?").toLowerCase();
                         
-                        if (zapato === "Airjordan red" || zapato === "airjordan red" || zapato ==="Airjordan Red") {
+                        if (zapato === "airjordan red") {
                             let valor = 48;
                             totalConDescuento("Airjordan red",valor, jordanPequeños);
-                            pago(zapato);
-                            break;
+                            compra = prompt ("¿Desea agregar al carrito? (marcar si o no)");
+                            pushCarrito();
                         }
                         
                         else if (zapato === "Jordan black" || zapato === "jordan black" || zapato === "Jordan Black") {
@@ -81,7 +371,7 @@ if (interes === "si" || interes === "Si" || interes === "SI") {
                             break;
                         }
                         else {
-                            alert ("No es ninguna de las opciones, si quiere puede elegir otra marca de nuestro catálogo");
+                            alert ("Si quiere puede elegir otra marca de nuestro catálogo");
                             break;
                         }
                     }
@@ -131,7 +421,7 @@ if (interes === "si" || interes === "Si" || interes === "SI") {
                 }
 
                 // UNDER ARMOUR
-                else if (marca === "under armour" || marca === "Under armour" || marca === "Under Armour" || marca === "UNDER ARMOUR") {
+                else if (marca === "under armour") {
                     alert (`Perfecto, tenemos zapatos ${marca} para ofrecerte y con descuento`);
                     talla = parseInt(prompt("¿Que talla de zapato usas?"));
                     
@@ -211,7 +501,7 @@ if (interes === "si" || interes === "Si" || interes === "SI") {
                 }
                 
                 // PUMA
-                else if (marca === "puma" || marca === "Puma" || marca === "PUMA") {
+                else if (marca === "puma") {
                     alert (`Perfecto, tenemos zapatos ${marca} para ofrecerte y con descuento`);
                     talla = parseInt(prompt("¿Que talla de zapato usas?"));
                     
@@ -398,7 +688,7 @@ if (interes === "si" || interes === "Si" || interes === "SI") {
                 }
 
                 // NIKE
-                else if (marca === "nike" || marca === "Nike" || marca === "NIKE") {
+                else if (marca === "nike") {
                     alert (`Perfecto, tenemos zapatos ${marca} para ofrecerte`);
                     talla = parseInt(prompt("¿Que talla de zapato usas?"));
                     
@@ -649,7 +939,7 @@ if (interes === "si" || interes === "Si" || interes === "SI") {
                 }
 
                 // ADIDAS 
-                else if (marca === "adidas" || marca === "Adidas" || marca === "ADIDAS") {
+                else if (marca === "adidas") {
                     alert (`Perfecto, tenemos zapatos ${marca} para ofrecerte`);
                     talla = parseInt(prompt("¿Que talla de zapato usas?"));
                     
@@ -898,24 +1188,30 @@ if (interes === "si" || interes === "Si" || interes === "SI") {
                         break;
                     }
                 }
+
+                else if (interes === "no") {
+                    alert ("zzzzzzz");
+                    break;
+                }
                 
                 else {
                     alert ("Lo siento, no tenemos de esa marca");
                     break;
                 }
             }
+            break;
         }
     }
 
-else if (interes === "no" || interes === "No" || interes === "NO") {
+else if (interes === "si" && interesMarca === "no") {
 
     while (dinero !== monto) {
-        marca = prompt ("Las marcas que tenemos disponibles son: Jordan, Under Armour, Puma, Adidas y Nike ¿Cual de estas 5 opciones te gustaria ver?");
+        marca = prompt ("Las marcas que tenemos disponibles son: Jordan, Under Armour, Puma, Adidas y Nike ¿Cual de estas 5 opciones te gustaria ver?").toLowerCase();
 
         while (bucle === 0) {
                 
                 // JORDAN
-                if ( marca === "jordan" || marca === "Jordan" || marca === "JORDAN") {
+                if ( marca === "jordan") {
                     alert (`Perfecto, tenemos zapatos ${marca} para ofrecerte y con descuento`);
                     talla = parseInt(prompt("¿Que talla de zapato usas?"));
                     
@@ -994,7 +1290,7 @@ else if (interes === "no" || interes === "No" || interes === "NO") {
                 }
 
                 // UNDER ARMOUR
-                else if (marca === "under armour" || marca === "Under armour" || marca === "Under Armour" || marca === "UNDER ARMOUR") {
+                else if (marca === "under armour") {
                     alert (`Perfecto, tenemos zapatos ${marca} para ofrecerte y con descuento`);
                     talla = parseInt(prompt("¿Que talla de zapato usas?"));
                     
@@ -1074,7 +1370,7 @@ else if (interes === "no" || interes === "No" || interes === "NO") {
                 }
                 
                 // PUMA
-                else if (marca === "puma" || marca === "Puma" || marca === "PUMA") {
+                else if (marca === "puma") {
                     alert (`Perfecto, tenemos zapatos ${marca} para ofrecerte y con descuento`);
                     talla = parseInt(prompt("¿Que talla de zapato usas?"));
                     
@@ -1261,7 +1557,7 @@ else if (interes === "no" || interes === "No" || interes === "NO") {
                 }
 
                 // NIKE
-                else if (marca === "nike" || marca === "Nike" || marca === "NIKE") {
+                else if (marca === "nike") {
                     alert (`Perfecto, tenemos zapatos ${marca} para ofrecerte`);
                     talla = parseInt(prompt("¿Que talla de zapato usas?"));
                     
@@ -1512,7 +1808,7 @@ else if (interes === "no" || interes === "No" || interes === "NO") {
                 }
 
                 // ADIDAS 
-                else if (marca === "adidas" || marca === "Adidas" || marca === "ADIDAS") {
+                else if (marca === "adidas") {
                     alert (`Perfecto, tenemos zapatos ${marca} para ofrecerte`);
                     talla = parseInt(prompt("¿Que talla de zapato usas?"));
                     
