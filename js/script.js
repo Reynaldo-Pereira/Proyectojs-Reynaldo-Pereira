@@ -15,40 +15,12 @@ let zapato = 0;
 let unidades = 1;
 let monto = 0;
 let dinero = 1;
+let totalFinal = 0;
 let carrito = [];
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Funciones 
-const pushCarrito = () => {
-    if (compra === "si") {
-        unidades = parseInt (prompt ("¿Cuantas unidades quiere?"));
-        carrito.push({zapato, unidades, monto});
-        interes = prompt ("¿Desea seguir comprando?");
-
-        if (interes === "si") {
-            marca = prompt ("¿Que marca estas buscando?");
-        }
-        else if (interes === "no") {
-            alert ("Muchas gracias por su tiempo, vuelva pronto!");
-        }
-        else {
-        }
-    }
-    else {
-        interes = prompt ("¿Desea seguir comprando?");
-
-        if (interes === "si") {
-            marca = prompt ("¿Que marca estas buscando?");
-        }
-        else if (interes === "no") {
-            alert ("Muchas gracias por su tiempo, vuelva pronto!");
-        }
-        else {
-        }
-    }
-}
-
 const totalConDescuento = (modelo, costo, descuento) => {
     monto = costo - descuento;
     alert (`Los ${modelo} con descuento te quedarian en ${monto}$`);
@@ -61,12 +33,49 @@ const total = (modelo, costo) => {
     return monto;
 }
 
-const pago = (tipo) => {
+const pushCarrito = () => {
+    compra = prompt ("¿Desea agregar al carrito? (marcar si o no)");
+
+    if (compra === "si") {
+        unidades = parseInt (prompt ("¿Cuantas unidades quiere?"));
+        carrito.push({zapato, unidades, monto});
+        interes = prompt ("¿Desea seguir comprando?");
+
+        if (interes === "si") {
+            marca = prompt ("¿Que marca estas buscando?");
+        }
+        else {
+            alert ("A continuación le mostraremos su carrito");
+            carrito.forEach ((carritoFinal) => {
+                alert (`Modelo: ${carritoFinal.zapato}; unidades: ${carritoFinal.unidades}; total a pagar por modelo ${carritoFinal.unidades * carritoFinal.monto}$`);
+            })
+            totalFinal = carrito.reduce ((acumulador, el) => acumulador + el.unidades * el.monto, 0);
+            alert (`El costo final por su compra es de ${totalFinal}$`);
+        }
+    }
+    else {
+        interes = prompt ("¿Desea seguir comprando?");
+
+        if (interes === "si") {
+            marca = prompt ("¿Que marca estas buscando?");
+        }
+        else {
+            alert ("A continuación le mostraremos su carrito");
+            carrito.forEach ((carritoFinal) => {
+                alert (`Modelo: ${carritoFinal.zapato}; unidades: ${carritoFinal.unidades}; total a pagar por modelo ${carritoFinal.unidades * carritoFinal.monto}$`);
+            })
+            totalFinal = carrito.reduce ((acumulador, el) => acumulador + el.unidades * el.monto, 0);
+            alert (`El costo final por su compra es de ${totalFinal}$`);
+        }
+    }
+}
+
+const pago = () => {
     while (buclePago === 0) {
         dinero = parseInt(prompt("Ingresar monto"));
         
-        if (dinero === monto) {
-            alert (`Compra realizada. Gracias por comprar los ${tipo} en nuestra tienda, vuelva pronto`);
+        if (dinero === totalFinal) {
+            alert ("Muchas gracias por comprar en nuestra tienda, vuelva pronto!");
             break;
         }
         else {
@@ -342,33 +351,30 @@ if (interes === "si" && interesMarca === "si" || interes === "si" && interesMarc
         while (bucle === 0) {
                 
                 // JORDAN
-                if ( interes === "si" && marca === "jordan") {
+                if (interes === "si" && marca === "jordan") {
                     alert (`Perfecto, tenemos zapatos ${marca} para ofrecerte y con descuento`);
                     var talla = parseInt(prompt("¿Que talla de zapato usas?"));
                     
                     if (talla > 35 && talla < 41) {
                         alert (catalogoJordanPequeños.join ("\n"));
-                        let zapato = prompt ("¿Cual le gustaria elegir?").toLowerCase();
+                        zapato = prompt ("¿Cual le gustaria elegir?").toLowerCase();
                         
                         if (zapato === "airjordan red") {
                             let valor = 48;
                             totalConDescuento("Airjordan red",valor, jordanPequeños);
-                            compra = prompt ("¿Desea agregar al carrito? (marcar si o no)");
                             pushCarrito();
                         }
                         
-                        else if (zapato === "Jordan black" || zapato === "jordan black" || zapato === "Jordan Black") {
+                        else if (zapato === "jordan black") {
                             valor = 55;
                             totalConDescuento("Jordan black",valor, jordanPequeños);
-                            pago(zapato);
-                            break;
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Jordan grey" || zapato === "jordan grey" || zapato === "Jordan Grey") {
+                        else if (zapato === "jordan grey") {
                             valor = 45;
                             totalConDescuento("Jordan grey",valor, jordanPequeños);
-                            pago(zapato);
-                            break;
+                            pushCarrito();
                         }
                         else {
                             alert ("Si quiere puede elegir otra marca de nuestro catálogo");
@@ -377,35 +383,31 @@ if (interes === "si" && interesMarca === "si" || interes === "si" && interesMarc
                     }
                     
                     else if (talla > 40 && talla < 49) {
-                        alert ("Tenemos:\nAirjordan red a 60$\nJordan grey a 55$\nAirjordan blue a 65$\nJordan black edición limitada a 80$");
-                        zapato = prompt ("¿Cual de estos 4 zapatos te gustaria elegir?");
+                        alert (catalogoJordanGrandes.join ("\n"));
+                        zapato = prompt ("¿Cual le gustaria elegir?").toLowerCase();
                         
-                        if (zapato === "Airjordan red" || zapato === "airjordan red" || zapato === "Airjordan Red") {
+                        if (zapato === "airjordan red") {
                             valor = 60;
                             totalConDescuento("Airjordan red",valor, jordanGrandes);
-                            pago(zapato);
-                            break;
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Jordan black" || zapato === "jordan black" || zapato === "Jordan Black") {
+                        else if (zapato === "jordan black") {
                             valor = 80;
                             totalConDescuento("Jordan black",valor, jordanGrandes);
-                            pago(zapato);
-                            break;
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Jordan grey" || zapato === "jordan grey" || zapato === "Jordan Grey") {
+                        else if (zapato === "jordan grey") {
                             valor = 55;
                             totalConDescuento("Jordan grey",valor, jordanGrandes);
-                            pago(zapato);
-                            break;
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Airjordan blue" || zapato === "airjordan blue" || zapato === "Airjordan Blue") {
+                        else if (zapato === "airjordan blue") {
                             valor = 65;
                             totalConDescuento("Airjordan blue",valor, jordanGrandes);
-                            pago(zapato);
-                            break;
+                            pushCarrito();
                         }
                         
                         else {
@@ -421,26 +423,24 @@ if (interes === "si" && interesMarca === "si" || interes === "si" && interesMarc
                 }
 
                 // UNDER ARMOUR
-                else if (marca === "under armour") {
+                else if (interes === "si" && marca === "under armour") {
                     alert (`Perfecto, tenemos zapatos ${marca} para ofrecerte y con descuento`);
                     talla = parseInt(prompt("¿Que talla de zapato usas?"));
                     
                     if (talla > 35 && talla < 41) {
-                        alert ("Para tallas pequeñas solo tenemos dos modelos:\nLas zapatillas basketball green a 35$\nzapatillas running pink a 40$");
-                        zapato = prompt ("¿Cual de estos 2 zapatos te gustaria elegir?");
+                        alert (catalogoUnderPequeños.join ("\n"));
+                        zapato = prompt ("¿Cual le gustaria elegir?").toLowerCase();
                         
-                        if (zapato === "Basketball green" || zapato === "basketball green" || zapato === "zapatillas green" || zapato === "Zapatillas green") {
+                        if (zapato === "basketball green") {
                             valor = 35;
-                            totalConDescuento("Zapatillas green",valor, underArmourPequeños);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Basketball green",valor, underArmourPequeños);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Running pink" || zapato === "running pink" || zapato === "zapatillas pink" || zapato === "Zapatillas pink") {
+                        else if (zapato === "running pink") {
                             valor = 40;
-                            totalConDescuento("Zapatillas pink",valor, underArmourPequeños);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Running pink",valor, underArmourPequeños);
+                            pushCarrito();
                         }
                         
                         else {
@@ -450,42 +450,37 @@ if (interes === "si" && interesMarca === "si" || interes === "si" && interesMarc
                     }
                     
                     else if (talla > 40 && talla < 47) {
-                        alert ("Tenemos:\nzapatillas training white a 70$\nzapatillas running pink a 70$\nzapatillas running black a 75$\nzapatillas basketball multicolor a 90$\nzapatillas basketball red a 85$");
-                        zapato = prompt ("¿Cual de estos 5 zapatos te gustaria elegir?");
+                        alert (catalogoUnderGrandes.join ("\n"));
+                        zapato = prompt ("¿Cual le gustaria elegir?").toLowerCase();
                         
-                        if (zapato === "Training white" || zapato === "training white" || zapato === "zapatillas white" || zapato === "Zapatillas white") {
+                        if (zapato === "training white") {
                             valor = 70;
-                            totalConDescuento("Zapatillas white",valor, underArmourGrandes);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Training white",valor, underArmourGrandes);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Running pink" || zapato === "running pink" || zapato === "zapatillas pink" || zapato === "Zapatillas pink") {
+                        else if (zapato === "running pink") {
                             valor = 70;
-                            totalConDescuento("Zapatillas rosas",valor, underArmourGrandes);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Running rosas",valor, underArmourGrandes);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Running black" || zapato === "running black" || zapato === "zapatillas black" || zapato === "Zapatillas black") {
+                        else if (zapato === "running black") {
                             valor = 75;
-                            totalConDescuento("Zapatillas black",valor, underArmourGrandes);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Running black",valor, underArmourGrandes);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Basketball multicolor" || zapato === "basketball multicolor" || zapato === "zapatillas multicolor" || zapato === "Zapatillas multicolor") {
+                        else if (zapato === "basketball multicolor") {
                             valor = 90;
-                            totalConDescuento("Zapatillas multicolor",valor, underArmourGrandes);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Basketball multicolor",valor, underArmourGrandes);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Basketball red" || zapato === "basketball red" || zapato === "zapatillas red" || zapato === "Zapatillas red") {
+                        else if (zapato === "basketball red") {
                             valor = 85;
-                            totalConDescuento("Zapatillas red",valor, underArmourGrandes);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Basketball red",valor, underArmourGrandes);
+                            pushCarrito();
                         }
                         
                         else {
@@ -501,61 +496,54 @@ if (interes === "si" && interesMarca === "si" || interes === "si" && interesMarc
                 }
                 
                 // PUMA
-                else if (marca === "puma") {
+                else if (interes === "si" && marca === "puma") {
                     alert (`Perfecto, tenemos zapatos ${marca} para ofrecerte y con descuento`);
                     talla = parseInt(prompt("¿Que talla de zapato usas?"));
                     
                     if (talla > 33 && talla < 41) {
-                        alert ("Tenemos:\nLas zapatillas running white a 38$\nzapatillas running blue 38$\nzapatillas running red a 38$\nzapatillas classic black a 45$\nzapatillas classic pink a 40$\nzapatillas classic purple a 43$\nzapatillas classic green a 40$");
-                        zapato = prompt ("¿Cual de estos 7 zapatos te gustaria elegir?");
+                        alert (catalogoPumaPequeños.join ("\n"));
+                        zapato = prompt ("¿Cual le gustaria elegir?").toLowerCase();
                         
-                        if (zapato === "Running white" || zapato === "running white" || zapato === "zapatillas white" || zapato === "Zapatillas white") {
+                        if (zapato === "running white") {
                             valor = 38;
-                            totalConDescuento("Zapatillas white",valor, pumaPequeños);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Running white",valor, pumaPequeños);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Running blue" || zapato === "running blue" || zapato === "zapatillas blue" || zapato === "Zapatillas blue") {
+                        else if (zapato === "running blue") {
                             valor = 38;
-                            totalConDescuento("Zapatillas blue",valor, pumaPequeños);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Running blue",valor, pumaPequeños);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Running red" || zapato === "running red" || zapato === "zapatillas red" || zapato === "Zapatillas red") {
+                        else if (zapato === "running red") {
                             valor = 38;
-                            totalConDescuento("Zapatillas red",valor, pumaPequeños);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Running red",valor, pumaPequeños);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Classic black" || zapato === "classic black" || zapato === "zapatillas black" || zapato === "Zapatillas black") {
+                        else if (zapato === "classic black") {
                             valor = 45;
-                            totalConDescuento("Zapatillas black",valor, pumaPequeños);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Classic black",valor, pumaPequeños);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Classic pink" || zapato === "classic pink" || zapato === "zapatillas pink" || zapato === "Zapatillas pink") {
+                        else if (zapato === "classic pink") {
                             valor = 40;
-                            totalConDescuento("Zapatillas pink",valor, pumaPequeños);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Classic pink",valor, pumaPequeños);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Classic purple" || zapato === "classic purple" || zapato === "zapatillas purple" || zapato === "Zapatillas purple") {
+                        else if (zapato === "classic purple") {
                             valor = 43;
-                            totalConDescuento("Zapatillas purple",valor, pumaPequeños);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Classic purple",valor, pumaPequeños);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Classic green" || zapato === "classic green" || zapato === "zapatillas green" || zapato === "Zapatillas green") {
+                        else if (zapato === "classic green") {
                             valor = 40;
-                            totalConDescuento("Zapatillas green",valor, pumaPequeños);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Classic green",valor, pumaPequeños);
+                            pushCarrito();
                         }
                         
                         else {
@@ -565,56 +553,49 @@ if (interes === "si" && interesMarca === "si" || interes === "si" && interesMarc
                     }
                     
                     else if (talla > 40 && talla < 44) {
-                        alert ("Tenemos:\nLas zapatillas running white a 43$\nzapatillas running blue 43$\nzapatillas running red a 43$\nzapatillas classic black a 50$\nzapatillas classic pink a 45$\nzapatillas classic purple a 48$\nzapatillas classic green a 45$");
-                        zapato = prompt ("¿Cual de estos 7 zapatos te gustaria elegir?");
+                        alert (catalogoPumaMedianos.join ("\n"));
+                        zapato = prompt ("¿Cual le gustaria elegir?").toLowerCase();
                         
-                        if (zapato === "Running white" || zapato === "running white" || zapato === "zapatillas white" || zapato === "Zapatillas white") {
+                        if (zapato === "running white") {
                             valor = 43;
-                            totalConDescuento("Zapatillas white",valor, pumaGrandes);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Running white",valor, pumaGrandes);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Running blue" || zapato === "running blue" || zapato === "zapatillas blue" || zapato === "Zapatillas blue") {
+                        else if (zapato === "running blue") {
                             valor = 43;
-                            totalConDescuento("Zapatillas blue",valor, pumaGrandes);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Running blue",valor, pumaGrandes);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Running red" || zapato === "running red" || zapato === "zapatillas red" || zapato === "Zapatillas red") {
+                        else if (zapato === "running red") {
                             valor = 43;
-                            totalConDescuento("Zapatillas red",valor, pumaGrandes);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Running red",valor, pumaGrandes);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Classic black" || zapato === "classic black" || zapato === "zapatillas black" || zapato === "Zapatillas black") {
+                        else if (zapato === "classic black") {
                             valor = 50;
-                            totalConDescuento("Zapatillas black",valor, pumaGrandes);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Classic black",valor, pumaGrandes);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Classic pink" || zapato === "classic pink" || zapato === "zapatillas pink" || zapato === "Zapatillas pink") {
+                        else if (zapato === "classic pink") {
                             valor = 45;
-                            totalConDescuento("Zapatillas pink",valor, pumaGrandes);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Classic pink",valor, pumaGrandes);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Classic purple" || zapato === "classic purple" || zapato === "zapatillas purple" || zapato === "Zapatillas purple") {
+                        else if (zapato === "classic purple") {
                             valor = 48;
-                            totalConDescuento("Zapatillas purple",valor, pumaGrandes);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Classic purple",valor, pumaGrandes);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Classic green" || zapato === "classic green" || zapato === "zapatillas green" || zapato === "Zapatillas green") {
+                        else if (zapato === "classic green") {
                             valor = 45;
-                            totalConDescuento("Zapatillas green",valor, pumaGrandes);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Classic green",valor, pumaGrandes);
+                            pushCarrito();
                         }
                         
                         else {
@@ -624,56 +605,49 @@ if (interes === "si" && interesMarca === "si" || interes === "si" && interesMarc
                     }
                     
                     else if (talla > 43 && talla < 47) {
-                        alert ("Tenemos:\nLas zapatillas running white a 48$\nzapatillas running blue 48$\nzapatillas running red a 48$\nzapatillas classic black a 55$\nzapatillas classic pink a 50$\nzapatillas classic purple a 53$\nzapatillas classic green a 50$");
-                        zapato = prompt ("¿Cual de estos 7 zapatos te gustaria elegir?");
+                        alert (catalogoPumaGrandes.join ("\n"));
+                        zapato = prompt ("¿Cual le gustaria elegir?").toLowerCase();
                         
-                        if (zapato === "Running white" || zapato === "running white" || zapato === "zapatillas white" || zapato === "Zapatillas white") {
+                        if (zapato === "running white") {
                             valor = 48;
-                            totalConDescuento("Zapatillas white",valor, pumaGrandes);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Running white",valor, pumaGrandes);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Running blue" || zapato === "running blue" || zapato === "zapatillas blue" || zapato === "Zapatillas blue") {
+                        else if (zapato === "running blue") {
                             valor = 48;
-                            totalConDescuento("Zapatillas blue",valor, pumaGrandes);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Running blue",valor, pumaGrandes);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Running red" || zapato === "running red" || zapato === "zapatillas red" || zapato === "Zapatillas red") {
+                        else if (zapato === "running red") {
                             valor = 48;
-                            totalConDescuento("Zapatillas red",valor, pumaGrandes);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Running red",valor, pumaGrandes);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Classic black" || zapato === "classic black" || zapato === "zapatillas black" || zapato === "Zapatillas black") {
+                        else if (zapato === "classic black") {
                             valor = 55;
-                            totalConDescuento("Zapatillas black",valor, pumaGrandes);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Classic black",valor, pumaGrandes);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Classic pink" || zapato === "classic pink" || zapato === "zapatillas pink" || zapato === "Zapatillas pink") {
+                        else if (zapato === "classic pink") {
                             valor = 50;
-                            totalConDescuento("Zapatillas pink",valor, pumaGrandes);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Classic pink",valor, pumaGrandes);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Classic purple" || zapato === "classic purple" || zapato === "zapatillas purple" || zapato === "Zapatillas purple") {
+                        else if (zapato === "classic purple") {
                             valor = 53;
-                            totalConDescuento("Zapatillas purple",valor, pumaGrandes);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Classic purple",valor, pumaGrandes);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Classic green" || zapato === "classic green" || zapato === "zapatillas green" || zapato === "Zapatillas green") {
+                        else if (zapato === "classic green") {
                             valor = 50;
-                            totalConDescuento("Zapatillas green",valor, pumaGrandes);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Classic green",valor, pumaGrandes);
+                            pushCarrito();
                         }
                         else {
                             alert ("No es ninguna de las opciones, si quiere puede elegir otra marca de nuestro catálogo");
@@ -688,82 +662,72 @@ if (interes === "si" && interesMarca === "si" || interes === "si" && interesMarc
                 }
 
                 // NIKE
-                else if (marca === "nike") {
+                else if (interes === "si" && marca === "nike") {
                     alert (`Perfecto, tenemos zapatos ${marca} para ofrecerte`);
                     talla = parseInt(prompt("¿Que talla de zapato usas?"));
                     
                     if (talla > 33 && talla < 41) {
-                        alert ("Tenemos:\nzapatillas dunk yellow a 75$\ndunk red a 80$\ndunk blue a 80$\nair black a 90$\nair white a 90$\nair purple a 85$\nair multicolor a 88$\nrunning pink a 80$\nrunning orange a 75$\nrunning green a 75$");
-                        zapato = prompt ("¿Cual de estos 10 zapatos te gustaria elegir?");
+                        alert (catalogoNikePequeños.join ("\n"));
+                        zapato = prompt ("¿Cual le gustaria elegir?").toLowerCase();
                         
-                        if (zapato === "Dunk yellow" || zapato === "dunk yellow" || zapato === "zapatillas yellow" || zapato === "Zapatillas yellow") {
+                        if (zapato === "dunk yellow") {
                             valor = 75;
-                            total("Zapatillas yellow",valor);
-                            pago(zapato);
-                            break;
+                            total("Dunk yellow",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Dunk red" || zapato === "dunk red" || zapato === "zapatillas red" || zapato === "Zapatillas red") {
+                        else if (zapato === "dunk red") {
                             valor = 80;
-                            total("Zapatillas red",valor);
-                            pago(zapato);
-                            break;
+                            total("Dunk red",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Dunk blue" || zapato === "dunk blue" || zapato === "zapatillas blue" || zapato === "Zapatillas blue") {
+                        else if (zapato === "dunk blue") {
                             valor = 80;
-                            total("Zapatillas blue",valor);
-                            pago(zapato);
-                            break;
+                            total("Dunk blue",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Air black" || zapato === "air black" || zapato === "zapatillas black" || zapato === "Zapatillas black") {
+                        else if (zapato === "air black") {
                             valor = 90;
-                            total("Zapatillas black",valor);
-                            pago(zapato);
-                            break;
+                            total("Air black",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Air white" || zapato === "air white" || zapato === "zapatillas white" || zapato === "Zapatillas white") {
+                        else if (zapato === "air white") {
                             valor = 90;
-                            total("Zapatillas white",valor);
-                            pago(zapato);
-                            break;
+                            total("Air white",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Air purple" || zapato === "air purple" || zapato === "zapatillas purple" || zapato === "Zapatillas purple") {
+                        else if (zapato === "air purple") {
                             valor = 85;
-                            total("Zapatillas purple",valor);
-                            pago(zapato);
-                            break;
+                            total("Air purple",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Air multicolor" || zapato === "air multicolor" || zapato === "zapatillas multicolor" || zapato === "Zapatillas multicolor") {
+                        else if (zapato === "air multicolor") {
                             valor = 88;
-                            total("Zapatillas multicolor",valor);
-                            pago(zapato);
-                            break;
+                            total("Air multicolor",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Running pink" || zapato === "running pink" || zapato === "zapatillas pink" || zapato === "Zapatillas pink") {
+                        else if (zapato === "running pink") {
                             valor = 80;
-                            total("Zapatillas pink",valor);
-                            pago(zapato);
-                            break;
+                            total("Running pink",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Running orange" || zapato === "running orange" || zapato === "zapatillas orange" || zapato === "Zapatillas orange") {
+                        else if (zapato === "running orange") {
                             valor = 75;
-                            total("Zapatillas orange",valor);
-                            pago(zapato);
-                            break;
+                            total("Running orange",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Running green" || zapato === "running green" || zapato === "zapatillas green" || zapato === "Zapatillas green") {
+                        else if (zapato === "running green") {
                             valor = 75;
-                            total("Zapatillas green",valor);
-                            pago(zapato);
-                            break;
+                            total("Running green",valor);
+                            pushCarrito();
                         }
                         
                         else {
@@ -773,77 +737,67 @@ if (interes === "si" && interesMarca === "si" || interes === "si" && interesMarc
                     }
                     
                     else if (talla > 40 && talla < 44) {
-                        alert ("Tenemos:\nzapatillas dunk yellow a 80$\ndunk red a 85$\ndunk blue a 85$\nair black a 95$\nair white a 95$\nair purple a 90$\nair multicolor a 93$\nrunning pink a 85$\nrunning orange a 80$\nrunning green a 80$");
-                        zapato = prompt ("¿Cual de estos 10 zapatos te gustaria elegir?");
+                        alert (catalogoNikeMedianos.join ("\n"));
+                        zapato = prompt ("¿Cual le gustaria elegir?").toLowerCase();
                         
-                        if (zapato === "Dunk yellow" || zapato === "dunk yellow" || zapato === "zapatillas yellow" || zapato === "Zapatillas yellow") {
+                        if (zapato === "dunk yellow") {
                             valor = 80;
-                            total("Zapatillas yellow",valor);
-                            pago(zapato);
-                            break;
+                            total("Dunk yellow",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Dunk red" || zapato === "dunk red" || zapato === "zapatillas red" || zapato === "Zapatillas red") {
+                        else if (zapato === "dunk red") {
                             valor = 85;
-                            total("Zapatillas red",valor);
-                            pago(zapato);
-                            break;
+                            total("Dunk red",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Dunk blue" || zapato === "dunk blue" || zapato === "zapatillas blue" || zapato === "Zapatillas blue") {
+                        else if (zapato === "dunk blue") {
                             valor = 85;
-                            total("Zapatillas blue",valor);
-                            pago(zapato);
-                            break;
+                            total("Dunk blue",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Air black" || zapato === "air black" || zapato === "zapatillas black" || zapato === "Zapatillas black") {
+                        else if (zapato === "air black") {
                             valor = 95;
-                            total("Zapatillas black",valor);
-                            pago(zapato);
-                            break;
+                            total("Air black",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Air white" || zapato === "air white" || zapato === "zapatillas white" || zapato === "Zapatillas white") {
+                        else if (zapato === "air white") {
                             valor = 95;
-                            total("Zapatillas white",valor);
-                            pago(zapato);
-                            break;
+                            total("Air white",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Air purple" || zapato === "air purple" || zapato === "zapatillas purple" || zapato === "Zapatillas purple") {
+                        else if (zapato === "air purple") {
                             valor = 90;
-                            total("Zapatillas purple",valor);
-                            pago(zapato);
-                            break;
+                            total("Air purple",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Air multicolor" || zapato === "air multicolor" || zapato === "zapatillas multicolor" || zapato === "Zapatillas multicolor") {
+                        else if (zapato === "air multicolor") {
                             valor = 93;
-                            total("Zapatillas multicolor",valor);
-                            pago(zapato);
-                            break;
+                            total("Air multicolor",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Running pink" || zapato === "running pink" || zapato === "zapatillas pink" || zapato === "Zapatillas pink") {
+                        else if (zapato === "running pink") {
                             valor = 85;
-                            total("Zapatillas pink",valor);
-                            pago(zapato);
-                            break;
+                            total("Running pink",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Running orange" || zapato === "running orange" || zapato === "zapatillas orange" || zapato === "Zapatillas orange") {
+                        else if (zapato === "running orange") {
                             valor = 80;
-                            total("Zapatillas orange",valor);
-                            pago(zapato);
-                            break;
+                            total("Running orange",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Running green" || zapato === "running green" || zapato === "zapatillas green" || zapato === "Zapatillas green") {
+                        else if (zapato === "running green") {
                             valor = 80;
-                            total("Zapatillas green",valor);
-                            pago(zapato);
-                            break;
+                            total("Running green",valor);
+                            pushCarrito();
                         }
                         
                         else {
@@ -853,77 +807,67 @@ if (interes === "si" && interesMarca === "si" || interes === "si" && interesMarc
                     }
                     
                     else if (talla > 43 && talla < 47) {
-                        alert ("Tenemos:\nzapatillas dunk yellow a 85$\ndunk red a 90$\ndunk blue a 90$\nair black a 100$\nair white a 100$\nair purple a 95$\nair multicolor edición limitada a 110$\nrunning pink a 90$\nrunning orange a 85$\nrunning green a 85$");
-                        zapato = prompt ("¿Cual de estos 10 zapatos te gustaria elegir?");
+                        alert (catalogoNikeGrandes.join ("\n"));
+                        zapato = prompt ("¿Cual le gustaria elegir?").toLowerCase();
                         
-                        if (zapato === "Dunk yellow" || zapato === "dunk yellow" || zapato === "zapatillas yellow" || zapato === "Zapatillas yellow") {
+                        if (zapato === "dunk yellow") {
                             valor = 85;
-                            total("Zapatillas yellow",valor);
-                            pago(zapato);
-                            break;
+                            total("Dunk yellow",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Dunk red" || zapato === "dunk red" || zapato === "zapatillas red" || zapato === "Zapatillas red") {
+                        else if (zapato === "dunk red") {
                             valor = 90;
-                            total("Zapatillas red",valor);
-                            pago(zapato);
-                            break;
+                            total("Dunk red",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Dunk blue" || zapato === "dunk blue" || zapato === "zapatillas blue" || zapato === "Zapatillas blue") {
+                        else if (zapato === "dunk blue") {
                             valor = 90;
-                            total("Zapatillas blue",valor);
-                            pago(zapato);
-                            break;
+                            total("Dunk blue",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Air black" || zapato === "air black" || zapato === "zapatillas black" || zapato === "Zapatillas black") {
+                        else if (zapato === "air black") {
                             valor = 100;
-                            total("Zapatillas black",valor);
-                            pago(zapato);
-                            break;
+                            total("Air black",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Air white" || zapato === "air white" || zapato === "zapatillas white" || zapato === "Zapatillas white") {
+                        else if (zapato === "air white") {
                             valor = 100;
-                            total("Zapatillas white",valor);
-                            pago(zapato);
-                            break;
+                            total("Air white",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Air purple" || zapato === "air purple" || zapato === "zapatillas purple" || zapato === "Zapatillas purple") {
+                        else if (zapato === "air purple") {
                             valor = 95;
-                            total("Zapatillas purple",valor);
-                            pago(zapato);
-                            break;
+                            total("Air purple",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Air multicolor" || zapato === "air multicolor" || zapato === "zapatillas multicolor" || zapato === "Zapatillas multicolor") {
+                        else if (zapato === "air multicolor") {
                             valor = 110;
-                            total("Zapatillas multicolor",valor);
-                            pago(zapato);
-                            break;
+                            total("Air multicolor",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Running pink" || zapato === "running pink" || zapato === "zapatillas pink" || zapato === "Zapatillas pink") {
+                        else if (zapato === "running pink") {
                             valor = 90;
-                            total("Zapatillas pink",valor);
-                            pago(zapato);
-                            break;
+                            total("Running pink",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Running orange" || zapato === "running orange" || zapato === "zapatillas orange" || zapato === "Zapatillas orange") {
+                        else if (zapato === "running orange") {
                             valor = 85;
-                            total("Zapatillas orange",valor);
-                            pago(zapato);
-                            break;
+                            total("Running orange",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Running green" || zapato === "running green" || zapato === "zapatillas green" || zapato === "Zapatillas green") {
+                        else if (zapato === "running green") {
                             valor = 85;
-                            total("Zapatillas green",valor);
-                            pago(zapato);
-                            break;
+                            total("Running green",valor);
+                            pushCarrito();
                         }
                         
                         else {
@@ -931,7 +875,7 @@ if (interes === "si" && interesMarca === "si" || interes === "si" && interesMarc
                             break;
                         }
                     }
-                    
+
                     else {
                         alert ("No tenemos de esa talla lo siento");
                         break;
@@ -939,82 +883,72 @@ if (interes === "si" && interesMarca === "si" || interes === "si" && interesMarc
                 }
 
                 // ADIDAS 
-                else if (marca === "adidas") {
+                else if (interes === "si" && marca === "adidas") {
                     alert (`Perfecto, tenemos zapatos ${marca} para ofrecerte`);
                     talla = parseInt(prompt("¿Que talla de zapato usas?"));
                     
                     if (talla > 33 && talla < 41) {
-                        alert ("Tenemos:\nzapatillas adizero yellow 75$\nadizero pink a 75$\nadizero blue a 80$\nlite racer black a 105$\nultraboost white a 110$\nlite racer grey a 85$\nlite racer red a 95$\nrunning purple a 80$\nrunning orange a 75$\nrunning green a 75$");
-                        zapato = prompt ("¿Cual de estos 10 zapatos te gustaria elegir?");
+                        alert (catalogoAdidasPequeños.join ("\n"));
+                        zapato = prompt ("¿Cual le gustaria elegir?").toLowerCase();
                         
-                        if (zapato === "Zapatillas adizero yellow" || zapato === "zapatillas adizero yellow" || zapato === "zapatillas yellow" || zapato === "Zapatillas yellow") {
+                        if (zapato === "adizero yellow") {
                             valor = 75;
-                            total("Zapatillas yellow",valor);
-                            pago(zapato);
-                            break;
+                            total("Adizero yellow",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Zapatillas adizero pink" || zapato === "zapatillas adizero pink" || zapato === "zapatillas pink" || zapato === "Zapatillas pink") {
+                        else if (zapato === "adizero pink") {
                             valor = 75;
-                            total("Zapatillas pink",valor);
-                            pago(zapato);
-                            break;
+                            total("Adizero pink",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Zapatillas adizero blue" || zapato === "zapatillas adizero blue" || zapato === "zapatillas blue" || zapato === "Zapatillas blue") {
+                        else if (zapato === "adizero blue") {
                             valor = 80;
-                            total("Zapatillas blue",valor);
-                            pago(zapato);
-                            break;
+                            total("Adizero blue",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Zapatillas lite racer black" || zapato === "zapatillas lite racer black" || zapato === "zapatillas black" || zapato === "Zapatillas black") {
+                        else if (zapato === "lite racer black") {
                             valor = 105;
-                            total("Zapatillas black",valor);
-                            pago(zapato);
-                            break;
+                            total("Lite racer black",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Zapatillas ultraboost white" || zapato === "zapatillas ultraboost white" || zapato === "zapatillas white" || zapato === "Zapatillas white") {
+                        else if (zapato === "ultraboost white") {
                             valor = 110;
-                            total("Zapatillas white",valor);
-                            pago(zapato);
-                            break;
+                            total("Ultraboost white",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Zapatillas lite racer grey" || zapato === "zapatillas lite racer grey" || zapato === "zapatillas grey" || zapato === "Zapatillas grey") {
+                        else if (zapato === "lite racer grey") {
                             valor = 85;
-                            total("Zapatillas grey",valor);
-                            pago(zapato);
-                            break;
+                            total("Lite racer grey",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Zapatillas lite racer red" || zapato === "zapatillas lite racer red" || zapato === "zapatillas red" || zapato === "Zapatillas red") {
+                        else if (zapato === "lite racer red") {
                             valor = 95;
-                            total("Zapatillas red",valor);
-                            pago(zapato);
-                            break;
+                            total("Lite racer red",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Zapatillas running purple" || zapato === "zapatillas running purple" ||zapato === "zapatillas purple" || zapato === "Zapatillas purple") {
+                        else if (zapato === "running purple") {
                             valor = 80;
-                            total("Zapatillas purple",valor);
-                            pago(zapato);
-                            break;
+                            total("Running purple",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Zapatillas running orange" || zapato === "zapatillas running orange" || zapato === "zapatillas orange" || zapato === "Zapatillas orange") {
+                        else if (zapato === "running orange") {
                             valor = 75;
-                            total("Zapatillas orange",valor);
-                            pago(zapato);
-                            break;
+                            total("Running orange",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Zapatillas running green" || zapato === "zapatillas running green" || zapato === "zapatillas green" || zapato === "Zapatillas green") {
+                        else if (zapato === "running green") {
                             valor = 75;
-                            total("Zapatillas green",valor);
-                            pago(zapato);
-                            break;
+                            total("Running green",valor);
+                            pushCarrito();
                         }
                         
                         else {
@@ -1024,77 +958,67 @@ if (interes === "si" && interesMarca === "si" || interes === "si" && interesMarc
                     }
                     
                     else if (talla > 40 && talla < 44) {
-                        alert ("Tenemos:\nzapatillas adizero yellow 80$\nadizero pink a 80$\nadizero blue a 85$\nlite racer black a 110$\nultraboost white a 115$\nlite racer grey a 90$\nlite racer red a 100$\nrunning purple a 85$\nrunning orange a 80$\nrunning green a 80$");
-                        zapato = prompt ("¿Cual de estos 10 zapatos te gustaria elegir?");
+                        alert (catalogoAdidasMedianos.join ("\n"));
+                        zapato = prompt ("¿Cual le gustaria elegir?").toLowerCase();
                         
-                        if (zapato === "Adizero yellow" || zapato === "adizero yellow" || zapato === "zapatillas yellow" || zapato === "Zapatillas yellow") {
+                        if (zapato === "adizero yellow") {
                             valor = 80;
-                            total("Zapatillas yellow",valor);
-                            pago(zapato);
-                            break;
+                            total("Adizero yellow",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Adizero pink" || zapato === "adizero pink" || zapato === "zapatillas pink" || zapato === "Zapatillas pink") {
+                        else if (zapato === "adizero pink") {
                             valor = 80;
-                            total("Zapatillas pink",valor);
-                            pago(zapato);
-                            break;
+                            total("Adizero pink",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Adizero blue" || zapato === "adizero blue" || zapato === "zapatillas blue" || zapato === "Zapatillas blue") {
+                        else if (zapato === "adizero blue") {
                             valor = 85;
-                            total("Zapatillas blue",valor);
-                            pago(zapato);
-                            break;
+                            total("Adizero blue",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Lite racer black" || zapato === "lite racer black" || zapato === "zapatillas black" || zapato === "Zapatillas black") {
+                        else if (zapato === "lite racer black") {
                             valor = 110;
-                            total("Zapatillas black",valor);
-                            pago(zapato);
-                            break;
+                            total("Lite racer black",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Ultraboost white" || zapato === "ultraboost white" || zapato === "zapatillas white" || zapato === "Zapatillas white") {
+                        else if (zapato === "ultraboost white") {
                             valor = 115;
-                            total("Zapatillas white",valor);
-                            pago(zapato);
-                            break;
+                            total("Ultraboost white",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Lite racer grey" || zapato === "lite racer grey" || zapato === "zapatillas grey" || zapato === "Zapatillas grey") {
+                        else if (zapato === "lite racer grey") {
                             valor = 90;
-                            total("Zapatillas grey",valor);
-                            pago(zapato);
-                            break;
+                            total("Lite racer grey",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Lite racer red" || zapato === "lite racer red" || zapato === "zapatillas red" || zapato === "Zapatillas red") {
+                        else if (zapato === "lite racer red") {
                             valor = 100;
-                            total("Zapatillas red",valor);
-                            pago(zapato);
-                            break;
+                            total("Lite racer red",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Running purple" || zapato === "running purple" ||zapato === "zapatillas purple" || zapato === "Zapatillas purple") {
+                        else if (zapato === "running purple") {
                             valor = 85;
-                            total("Zapatillas purple",valor);
-                            pago(zapato);
-                            break;
+                            total("Running purple",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Running orange" || zapato === "running orange" || zapato === "zapatillas orange" || zapato === "Zapatillas orange") {
+                        else if (zapato === "running orange") {
                             valor = 80;
-                            total("Zapatillas orange",valor);
-                            pago(zapato);
-                            break;
+                            total("Running orange",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Running green" || zapato === "running green" || zapato === "zapatillas green" || zapato === "Zapatillas green") {
+                        else if (zapato === "running green") {
                             valor = 80;
-                            total("Zapatillas green",valor);
-                            pago(zapato);
-                            break;
+                            total("Running green",valor);
+                            pushCarrito();
                         }
                         
                         else {
@@ -1104,77 +1028,67 @@ if (interes === "si" && interesMarca === "si" || interes === "si" && interesMarc
                     }
                     
                     else if (talla > 43 && talla < 47) {
-                        alert ("Tenemos:\nzapatillas adizero yellow 85$\nadizero pink a 85$\nadizero blue a 90$\nlite racer black a 115$\nultraboost white a 120$\nlite racer grey a 95$\nlite racer red a 105$\nrunning purple a 90$\nrunning orange a 85$\nrunning green a 85$");
-                        zapato = prompt ("¿Cual de estos 10 zapatos te gustaria elegir?");
+                        alert (catalogoAdidasGrandes.join ("\n"));
+                        zapato = prompt ("¿Cual le gustaria elegir?").toLowerCase();
                         
-                        if (zapato === "Adizero yellow" || zapato === "adizero yellow" || zapato === "zapatillas yellow" || zapato === "Zapatillas yellow") {
+                        if (zapato === "adizero yellow") {
                             valor = 85;
-                            total("Zapatillas yellow",valor);
-                            pago(zapato);
-                            break;
+                            total("Adizero yellow",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Adizero pink" || zapato === "adizero pink" || zapato === "zapatillas pink" || zapato === "Zapatillas pink") {
+                        else if (zapato === "adizero pink") {
                             valor = 85;
-                            total("Zapatillas pink",valor);
-                            pago(zapato);
-                            break;
+                            total("Adizero pink",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Adizero blue" || zapato === "adizero blue" || zapato === "zapatillas blue" || zapato === "Zapatillas blue") {
+                        else if (zapato === "adizero blue") {
                             valor = 90;
-                            total("Zapatillas blue",valor);
-                            pago(zapato);
-                            break;
+                            total("Adizero blue",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Lite racer black" || zapato === "lite racer black" || zapato === "zapatillas black" || zapato === "Zapatillas black") {
+                        else if (zapato === "lite racer black") {
                             valor = 115;
-                            total("Zapatillas black",valor);
-                            pago(zapato);
-                            break;
+                            total("Lite racer black",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Ultraboost white" || zapato === "ultraboost white" || zapato === "zapatillas white" || zapato === "Zapatillas white") {
+                        else if (zapato === "ultraboost white") {
                             valor = 120;
-                            total("Zapatillas white",valor);
-                            pago(zapato);
-                            break;
+                            total("Ultraboost white",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Lite racer grey" || zapato === "lite racer grey" || zapato === "zapatillas grey" || zapato === "Zapatillas grey") {
+                        else if (zapato === "lite racer grey") {
                             valor = 95;
-                            total("Zapatillas grey",valor);
-                            pago(zapato);
-                            break;
+                            total("Lite racer grey",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Lite racer red" || zapato === "lite racer red" || zapato === "zapatillas red" || zapato === "Zapatillas red") {
+                        else if (zapato === "lite racer red") {
                             valor = 105;
-                            total("Zapatillas red",valor);
-                            pago(zapato);
-                            break;
+                            total("Lite racer red",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Running purple" || zapato === "running purple" ||zapato === "zapatillas purple" || zapato === "Zapatillas purple") {
+                        else if (zapato === "running purple") {
                             valor = 90;
-                            total("Zapatillas purple",valor);
-                            pago(zapato);
-                            break;
+                            total("Running purple",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Running orange" || zapato === "running orange" || zapato === "zapatillas orange" || zapato === "Zapatillas orange") {
+                        else if (zapato === "running orange") {
                             valor = 85;
-                            total("Zapatillas orange",valor);
-                            pago(zapato);
-                            break;
+                            total("Running orange",valor);
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Running green" || zapato === "running green" || zapato === "zapatillas green" || zapato === "Zapatillas green") {
+                        else if (zapato === "running green") {
                             valor = 85;
-                            total("Zapatillas green",valor);
-                            pago(zapato);
-                            break;
+                            total("Running green",valor);
+                            pushCarrito();
                         }
                         
                         else {
@@ -1190,7 +1104,7 @@ if (interes === "si" && interesMarca === "si" || interes === "si" && interesMarc
                 }
 
                 else if (interes === "no") {
-                    alert ("zzzzzzz");
+                    pago();
                     break;
                 }
                 
@@ -1211,72 +1125,66 @@ else if (interes === "si" && interesMarca === "no") {
         while (bucle === 0) {
                 
                 // JORDAN
-                if ( marca === "jordan") {
+                if (interes === "si" && marca === "jordan") {
                     alert (`Perfecto, tenemos zapatos ${marca} para ofrecerte y con descuento`);
                     talla = parseInt(prompt("¿Que talla de zapato usas?"));
                     
                     if (talla > 35 && talla < 41) {
-                        alert ("Tenemos:\nAirjordan red a 48$\nJordan black a 55$\nJordan grey a 45$");
-                        zapato = prompt ("¿Cual de estos 3 zapatos te gustaria elegir?");
+                        alert (catalogoJordanPequeños.join ("\n"));
+                        zapato = prompt ("¿Cual le gustaria elegir?").toLowerCase();
                         
-                        if (zapato === "Airjordan red" || zapato === "airjordan red" || zapato ==="Airjordan Red") {
-                            valor = 48;
+                        if (zapato === "airjordan red") {
+                            let valor = 48;
                             totalConDescuento("Airjordan red",valor, jordanPequeños);
-                            pago(zapato);
-                            break;
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Jordan black" || zapato === "jordan black" || zapato === "Jordan Black") {
+                        else if (zapato === "jordan black") {
                             valor = 55;
                             totalConDescuento("Jordan black",valor, jordanPequeños);
-                            pago(zapato);
-                            break;
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Jordan grey" || zapato === "jordan grey" || zapato === "Jordan Grey") {
+                        else if (zapato === "jordan grey") {
                             valor = 45;
                             totalConDescuento("Jordan grey",valor, jordanPequeños);
-                            pago(zapato);
-                            break;
+                            pushCarrito();
                         }
+                        
                         else {
-                            alert ("No es ninguna de las opciones, si quiere puede elegir otra marca de nuestro catálogo");
+                            alert ("Si quiere puede elegir otra marca de nuestro catálogo");
                             break;
                         }
                     }
                     
                     else if (talla > 40 && talla < 49) {
-                        alert ("Tenemos:\nAirjordan red a 60$\nJordan grey a 55$\nAirjordan blue a 65$\nJordan black edición limitada a 80$");
-                        zapato = prompt ("¿Cual de estos 4 zapatos te gustaria elegir?");
+                        alert (catalogoJordanGrandes.join ("\n"));
+                        zapato = prompt ("¿Cual le gustaria elegir?").toLowerCase();
                         
-                        if (zapato === "Airjordan red" || zapato === "airjordan red" || zapato === "Airjordan Red") {
+                        if (zapato === "airjordan red") {
                             valor = 60;
                             totalConDescuento("Airjordan red",valor, jordanGrandes);
-                            pago(zapato);
-                            break;
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Jordan black" || zapato === "jordan black" || zapato === "Jordan Black") {
+                        else if (zapato === "jordan black") {
                             valor = 80;
                             totalConDescuento("Jordan black",valor, jordanGrandes);
-                            pago(zapato);
-                            break;
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Jordan grey" || zapato === "jordan grey" || zapato === "Jordan Grey") {
+                        else if (zapato === "jordan grey") {
                             valor = 55;
                             totalConDescuento("Jordan grey",valor, jordanGrandes);
-                            pago(zapato);
-                            break;
+                            pushCarrito();
                         }
                         
-                        else if (zapato === "Airjordan blue" || zapato === "airjordan blue" || zapato === "Airjordan Blue") {
+                        else if (zapato === "airjordan blue") {
                             valor = 65;
                             totalConDescuento("Airjordan blue",valor, jordanGrandes);
-                            pago(zapato);
-                            break;
+                            pushCarrito();
                         }
-                        
+                    
                         else {
                             alert ("No es ninguna de las opciones, si quiere puede elegir otra marca de nuestro catálogo");
                             break;
@@ -1287,82 +1195,75 @@ else if (interes === "si" && interesMarca === "no") {
                         alert ("No tenemos de esa talla lo siento");
                         break;
                     }
-                }
+                }  
 
                 // UNDER ARMOUR
-                else if (marca === "under armour") {
+                else if (interes === "si" && marca === "under armour") {
                     alert (`Perfecto, tenemos zapatos ${marca} para ofrecerte y con descuento`);
                     talla = parseInt(prompt("¿Que talla de zapato usas?"));
-                    
+                
                     if (talla > 35 && talla < 41) {
-                        alert ("Para tallas pequeñas solo tenemos dos modelos:\nLas zapatillas basketball green a 35$\nzapatillas running pink a 40$");
-                        zapato = prompt ("¿Cual de estos 2 zapatos te gustaria elegir?");
-                        
-                        if (zapato === "Basketball green" || zapato === "basketball green" || zapato === "zapatillas green" || zapato === "Zapatillas green") {
+                        alert (catalogoUnderPequeños.join ("\n"));
+                        zapato = prompt ("¿Cual le gustaria elegir?").toLowerCase();
+                    
+                        if (zapato === "basketball green") {
                             valor = 35;
-                            totalConDescuento("Zapatillas green",valor, underArmourPequeños);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Basketball green",valor, underArmourPequeños);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Running pink" || zapato === "running pink" || zapato === "zapatillas pink" || zapato === "Zapatillas pink") {
+                    
+                        else if (zapato === "running pink") {
                             valor = 40;
-                            totalConDescuento("Zapatillas pink",valor, underArmourPequeños);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Running pink",valor, underArmourPequeños);
+                            pushCarrito();
                         }
-                        
+                    
                         else {
                             alert ("No es ninguna de las opciones, si quiere puede elegir otra marca de nuestro catálogo");
                             break;
                         }
                     }
-                    
+                
                     else if (talla > 40 && talla < 47) {
-                        alert ("Tenemos:\nzapatillas training white a 70$\nzapatillas running pink a 70$\nzapatillas running black a 75$\nzapatillas basketball multicolor a 90$\nzapatillas basketball red a 85$");
-                        zapato = prompt ("¿Cual de estos 5 zapatos te gustaria elegir?");
-                        
-                        if (zapato === "Training white" || zapato === "training white" || zapato === "zapatillas white" || zapato === "Zapatillas white") {
+                        alert (catalogoUnderGrandes.join ("\n"));
+                        zapato = prompt ("¿Cual le gustaria elegir?").toLowerCase();
+                    
+                        if (zapato === "training white") {
                             valor = 70;
-                            totalConDescuento("Zapatillas white",valor, underArmourGrandes);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Training white",valor, underArmourGrandes);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Running pink" || zapato === "running pink" || zapato === "zapatillas pink" || zapato === "Zapatillas pink") {
+                    
+                        else if (zapato === "running pink") {
                             valor = 70;
-                            totalConDescuento("Zapatillas rosas",valor, underArmourGrandes);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Running rosas",valor, underArmourGrandes);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Running black" || zapato === "running black" || zapato === "zapatillas black" || zapato === "Zapatillas black") {
+                    
+                        else if (zapato === "running black") {
                             valor = 75;
-                            totalConDescuento("Zapatillas black",valor, underArmourGrandes);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Running black",valor, underArmourGrandes);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Basketball multicolor" || zapato === "basketball multicolor" || zapato === "zapatillas multicolor" || zapato === "Zapatillas multicolor") {
+                    
+                        else if (zapato === "basketball multicolor") {
                             valor = 90;
-                            totalConDescuento("Zapatillas multicolor",valor, underArmourGrandes);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Basketball multicolor",valor, underArmourGrandes);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Basketball red" || zapato === "basketball red" || zapato === "zapatillas red" || zapato === "Zapatillas red") {
+                    
+                        else if (zapato === "basketball red") {
                             valor = 85;
-                            totalConDescuento("Zapatillas red",valor, underArmourGrandes);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Basketball red",valor, underArmourGrandes);
+                            pushCarrito();
                         }
-                        
+                    
                         else {
-                            alert ("No es ninguna de las opciones, si quiere puede elegir otra marca de nuestro catálogo");
+                            alert ("No es ninguna de las opciones, si quiere puede elegir otra marca de nuestro     catálogo");
                             break
                         }
                     }
-                    
+                
                     else {
                         alert ("No tenemos de esa talla lo siento");
                         break;
@@ -1370,186 +1271,166 @@ else if (interes === "si" && interesMarca === "no") {
                 }
                 
                 // PUMA
-                else if (marca === "puma") {
+                else if (interes === "si" && marca === "puma") {
                     alert (`Perfecto, tenemos zapatos ${marca} para ofrecerte y con descuento`);
                     talla = parseInt(prompt("¿Que talla de zapato usas?"));
-                    
+                
                     if (talla > 33 && talla < 41) {
-                        alert ("Tenemos:\nLas zapatillas running white a 38$\nzapatillas running blue 38$\nzapatillas running red a 38$\nzapatillas classic black a 45$\nzapatillas classic pink a 40$\nzapatillas classic purple a 43$\nzapatillas classic green a 40$");
-                        zapato = prompt ("¿Cual de estos 7 zapatos te gustaria elegir?");
-                        
-                        if (zapato === "Running white" || zapato === "running white" || zapato === "zapatillas white" || zapato === "Zapatillas white") {
+                        alert (catalogoPumaPequeños.join ("\n"));
+                        zapato = prompt ("¿Cual le gustaria elegir?").toLowerCase();
+                    
+                        if (zapato === "running white") {
                             valor = 38;
-                            totalConDescuento("Zapatillas white",valor, pumaPequeños);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Running white",valor, pumaPequeños);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Running blue" || zapato === "running blue" || zapato === "zapatillas blue" || zapato === "Zapatillas blue") {
+                    
+                        else if (zapato === "running blue") {
                             valor = 38;
-                            totalConDescuento("Zapatillas blue",valor, pumaPequeños);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Running blue",valor, pumaPequeños);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Running red" || zapato === "running red" || zapato === "zapatillas red" || zapato === "Zapatillas red") {
+                    
+                        else if (zapato === "running red") {
                             valor = 38;
-                            totalConDescuento("Zapatillas red",valor, pumaPequeños);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Running red",valor, pumaPequeños);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Classic black" || zapato === "classic black" || zapato === "zapatillas black" || zapato === "Zapatillas black") {
+                    
+                        else if (zapato === "classic black") {
                             valor = 45;
-                            totalConDescuento("Zapatillas black",valor, pumaPequeños);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Classic black",valor, pumaPequeños);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Classic pink" || zapato === "classic pink" || zapato === "zapatillas pink" || zapato === "Zapatillas pink") {
+                    
+                        else if (zapato === "classic pink") {
                             valor = 40;
-                            totalConDescuento("Zapatillas pink",valor, pumaPequeños);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Classic pink",valor, pumaPequeños);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Classic purple" || zapato === "classic purple" || zapato === "zapatillas purple" || zapato === "Zapatillas purple") {
+                    
+                        else if (zapato === "classic purple") {
                             valor = 43;
-                            totalConDescuento("Zapatillas purple",valor, pumaPequeños);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Classic purple",valor, pumaPequeños);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Classic green" || zapato === "classic green" || zapato === "zapatillas green" || zapato === "Zapatillas green") {
+                    
+                        else if (zapato === "classic green") {
                             valor = 40;
-                            totalConDescuento("Zapatillas green",valor, pumaPequeños);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Classic green",valor, pumaPequeños);
+                            pushCarrito();
                         }
-                        
+                    
                         else {
                             alert ("No es ninguna de las opciones, si quiere puede elegir otra marca de nuestro catálogo");
                             break;
                         }
                     }
-                    
+                
                     else if (talla > 40 && talla < 44) {
-                        alert ("Tenemos:\nLas zapatillas running white a 43$\nzapatillas running blue 43$\nzapatillas running red a 43$\nzapatillas classic black a 50$\nzapatillas classic pink a 45$\nzapatillas classic purple a 48$\nzapatillas classic green a 45$");
-                        zapato = prompt ("¿Cual de estos 7 zapatos te gustaria elegir?");
-                        
-                        if (zapato === "Running white" || zapato === "running white" || zapato === "zapatillas white" || zapato === "Zapatillas white") {
+                        alert (catalogoPumaMedianos.join ("\n"));
+                        zapato = prompt ("¿Cual le gustaria elegir?").toLowerCase();
+                    
+                        if (zapato === "running white") {
                             valor = 43;
-                            totalConDescuento("Zapatillas white",valor, pumaGrandes);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Running white",valor, pumaGrandes);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Running blue" || zapato === "running blue" || zapato === "zapatillas blue" || zapato === "Zapatillas blue") {
+                    
+                        else if (zapato === "running blue") {
                             valor = 43;
-                            totalConDescuento("Zapatillas blue",valor, pumaGrandes);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Running blue",valor, pumaGrandes);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Running red" || zapato === "running red" || zapato === "zapatillas red" || zapato === "Zapatillas red") {
+                    
+                        else if (zapato === "running red") {
                             valor = 43;
-                            totalConDescuento("Zapatillas red",valor, pumaGrandes);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Running red",valor, pumaGrandes);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Classic black" || zapato === "classic black" || zapato === "zapatillas black" || zapato === "Zapatillas black") {
+                    
+                        else if (zapato === "classic black") {
                             valor = 50;
-                            totalConDescuento("Zapatillas black",valor, pumaGrandes);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Classic black",valor, pumaGrandes);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Classic pink" || zapato === "classic pink" || zapato === "zapatillas pink" || zapato === "Zapatillas pink") {
+                    
+                        else if (zapato === "classic pink") {
                             valor = 45;
-                            totalConDescuento("Zapatillas pink",valor, pumaGrandes);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Classic pink",valor, pumaGrandes);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Classic purple" || zapato === "classic purple" || zapato === "zapatillas purple" || zapato === "Zapatillas purple") {
+                    
+                        else if (zapato === "classic purple") {
                             valor = 48;
-                            totalConDescuento("Zapatillas purple",valor, pumaGrandes);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Classic purple",valor, pumaGrandes);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Classic green" || zapato === "classic green" || zapato === "zapatillas green" || zapato === "Zapatillas green") {
+                    
+                        else if (zapato === "classic green") {
                             valor = 45;
-                            totalConDescuento("Zapatillas green",valor, pumaGrandes);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Classic green",valor, pumaGrandes);
+                            pushCarrito();
                         }
-                        
+                    
                         else {
                             alert ("No es ninguna de las opciones, si quiere puede elegir otra marca de nuestro catálogo");
                             break;
                         }
                     }
-                    
+                
                     else if (talla > 43 && talla < 47) {
-                        alert ("Tenemos:\nLas zapatillas running white a 48$\nzapatillas running blue 48$\nzapatillas running red a 48$\nzapatillas classic black a 55$\nzapatillas classic pink a 50$\nzapatillas classic purple a 53$\nzapatillas classic green a 50$");
-                        zapato = prompt ("¿Cual de estos 7 zapatos te gustaria elegir?");
-                        
-                        if (zapato === "Running white" || zapato === "running white" || zapato === "zapatillas white" || zapato === "Zapatillas white") {
+                        alert (catalogoPumaGrandes.join ("\n"));
+                        zapato = prompt ("¿Cual le gustaria elegir?").toLowerCase();
+                    
+                        if (zapato === "running white") {
                             valor = 48;
-                            totalConDescuento("Zapatillas white",valor, pumaGrandes);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Running white",valor, pumaGrandes);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Running blue" || zapato === "running blue" || zapato === "zapatillas blue" || zapato === "Zapatillas blue") {
+                    
+                        else if (zapato === "running blue") {
                             valor = 48;
-                            totalConDescuento("Zapatillas blue",valor, pumaGrandes);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Running blue",valor, pumaGrandes);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Running red" || zapato === "running red" || zapato === "zapatillas red" || zapato === "Zapatillas red") {
+                    
+                        else if (zapato === "running red") {
                             valor = 48;
-                            totalConDescuento("Zapatillas red",valor, pumaGrandes);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Running red",valor, pumaGrandes);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Classic black" || zapato === "classic black" || zapato === "zapatillas black" || zapato === "Zapatillas black") {
+                    
+                        else if (zapato === "classic black") {
                             valor = 55;
-                            totalConDescuento("Zapatillas black",valor, pumaGrandes);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Classic black",valor, pumaGrandes);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Classic pink" || zapato === "classic pink" || zapato === "zapatillas pink" || zapato === "Zapatillas pink") {
+                    
+                        else if (zapato === "classic pink") {
                             valor = 50;
-                            totalConDescuento("Zapatillas pink",valor, pumaGrandes);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Classic pink",valor, pumaGrandes);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Classic purple" || zapato === "classic purple" || zapato === "zapatillas purple" || zapato === "Zapatillas purple") {
+                    
+                        else if (zapato === "classic purple") {
                             valor = 53;
-                            totalConDescuento("Zapatillas purple",valor, pumaGrandes);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Classic purple",valor, pumaGrandes);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Classic green" || zapato === "classic green" || zapato === "zapatillas green" || zapato === "Zapatillas green") {
+                    
+                        else if (zapato === "classic green") {
                             valor = 50;
-                            totalConDescuento("Zapatillas green",valor, pumaGrandes);
-                            pago(zapato);
-                            break;
+                            totalConDescuento("Classic green",valor, pumaGrandes);
+                            pushCarrito();
                         }
+
                         else {
                             alert ("No es ninguna de las opciones, si quiere puede elegir otra marca de nuestro catálogo");
                             break;
                         }
                     }
-                    
+                
                     else {
                         alert ("No tenemos de esa talla lo siento");
                         break;
@@ -1557,250 +1438,220 @@ else if (interes === "si" && interesMarca === "no") {
                 }
 
                 // NIKE
-                else if (marca === "nike") {
+                else if (interes === "si" && marca === "nike") {
                     alert (`Perfecto, tenemos zapatos ${marca} para ofrecerte`);
                     talla = parseInt(prompt("¿Que talla de zapato usas?"));
-                    
+                
                     if (talla > 33 && talla < 41) {
-                        alert ("Tenemos:\nzapatillas dunk yellow a 75$\ndunk red a 80$\ndunk blue a 80$\nair black a 90$\nair white a 90$\nair purple a 85$\nair multicolor a 88$\nrunning pink a 80$\nrunning orange a 75$\nrunning green a 75$");
-                        zapato = prompt ("¿Cual de estos 10 zapatos te gustaria elegir?");
-                        
-                        if (zapato === "Dunk yellow" || zapato === "dunk yellow" || zapato === "zapatillas yellow" || zapato === "Zapatillas yellow") {
+                        alert (catalogoNikePequeños.join ("\n"));
+                        zapato = prompt ("¿Cual le gustaria elegir?").toLowerCase();
+                    
+                        if (zapato === "dunk yellow") {
                             valor = 75;
-                            total("Zapatillas yellow",valor);
-                            pago(zapato);
-                            break;
+                            total("Dunk yellow",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Dunk red" || zapato === "dunk red" || zapato === "zapatillas red" || zapato === "Zapatillas red") {
+                    
+                        else if (zapato === "dunk red") {
                             valor = 80;
-                            total("Zapatillas red",valor);
-                            pago(zapato);
-                            break;
+                            total("Dunk red",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Dunk blue" || zapato === "dunk blue" || zapato === "zapatillas blue" || zapato === "Zapatillas blue") {
+                    
+                        else if (zapato === "dunk blue") {
                             valor = 80;
-                            total("Zapatillas blue",valor);
-                            pago(zapato);
-                            break;
+                            total("Dunk blue",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Air black" || zapato === "air black" || zapato === "zapatillas black" || zapato === "Zapatillas black") {
+                    
+                        else if (zapato === "air black") {
                             valor = 90;
-                            total("Zapatillas black",valor);
-                            pago(zapato);
-                            break;
+                            total("Air black",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Air white" || zapato === "air white" || zapato === "zapatillas white" || zapato === "Zapatillas white") {
+                    
+                        else if (zapato === "air white") {
                             valor = 90;
-                            total("Zapatillas white",valor);
-                            pago(zapato);
-                            break;
+                            total("Air white",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Air purple" || zapato === "air purple" || zapato === "zapatillas purple" || zapato === "Zapatillas purple") {
+                    
+                        else if (zapato === "air purple") {
                             valor = 85;
-                            total("Zapatillas purple",valor);
-                            pago(zapato);
-                            break;
+                            total("Air purple",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Air multicolor" || zapato === "air multicolor" || zapato === "zapatillas multicolor" || zapato === "Zapatillas multicolor") {
+                    
+                        else if (zapato === "air multicolor") {
                             valor = 88;
-                            total("Zapatillas multicolor",valor);
-                            pago(zapato);
-                            break;
+                            total("Air multicolor",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Running pink" || zapato === "running pink" || zapato === "zapatillas pink" || zapato === "Zapatillas pink") {
+                    
+                        else if (zapato === "running pink") {
                             valor = 80;
-                            total("Zapatillas pink",valor);
-                            pago(zapato);
-                            break;
+                            total("Running pink",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Running orange" || zapato === "running orange" || zapato === "zapatillas orange" || zapato === "Zapatillas orange") {
+                    
+                        else if (zapato === "running orange") {
                             valor = 75;
-                            total("Zapatillas orange",valor);
-                            pago(zapato);
-                            break;
+                            total("Running orange",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Running green" || zapato === "running green" || zapato === "zapatillas green" || zapato === "Zapatillas green") {
+                    
+                        else if (zapato === "running green") {
                             valor = 75;
-                            total("Zapatillas green",valor);
-                            pago(zapato);
-                            break;
+                            total("Running green",valor);
+                            pushCarrito();
                         }
-                        
+                    
                         else {
                             alert ("No es ninguna de las opciones, si quiere puede elegir otra marca de nuestro catálogo");
                             break;
                         }
                     }
-                    
+                
                     else if (talla > 40 && talla < 44) {
-                        alert ("Tenemos:\nzapatillas dunk yellow a 80$\ndunk red a 85$\ndunk blue a 85$\nair black a 95$\nair white a 95$\nair purple a 90$\nair multicolor a 93$\nrunning pink a 85$\nrunning orange a 80$\nrunning green a 80$");
-                        zapato = prompt ("¿Cual de estos 10 zapatos te gustaria elegir?");
-                        
-                        if (zapato === "Dunk yellow" || zapato === "dunk yellow" || zapato === "zapatillas yellow" || zapato === "Zapatillas yellow") {
+                        alert (catalogoNikeMedianos.join ("\n"));
+                        zapato = prompt ("¿Cual le gustaria elegir?").toLowerCase();
+                    
+                        if (zapato === "dunk yellow") {
                             valor = 80;
-                            total("Zapatillas yellow",valor);
-                            pago(zapato);
-                            break;
+                            total("Dunk yellow",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Dunk red" || zapato === "dunk red" || zapato === "zapatillas red" || zapato === "Zapatillas red") {
+                    
+                        else if (zapato === "dunk red") {
                             valor = 85;
-                            total("Zapatillas red",valor);
-                            pago(zapato);
-                            break;
+                            total("Dunk red",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Dunk blue" || zapato === "dunk blue" || zapato === "zapatillas blue" || zapato === "Zapatillas blue") {
+                    
+                        else if (zapato === "dunk blue") {
                             valor = 85;
-                            total("Zapatillas blue",valor);
-                            pago(zapato);
-                            break;
+                            total("Dunk blue",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Air black" || zapato === "air black" || zapato === "zapatillas black" || zapato === "Zapatillas black") {
+                    
+                        else if (zapato === "air black") {
                             valor = 95;
-                            total("Zapatillas black",valor);
-                            pago(zapato);
-                            break;
+                            total("Air black",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Air white" || zapato === "air white" || zapato === "zapatillas white" || zapato === "Zapatillas white") {
+                    
+                        else if (zapato === "air white") {
                             valor = 95;
-                            total("Zapatillas white",valor);
-                            pago(zapato);
-                            break;
+                            total("Air white",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Air purple" || zapato === "air purple" || zapato === "zapatillas purple" || zapato === "Zapatillas purple") {
+                    
+                        else if (zapato === "air purple") {
                             valor = 90;
-                            total("Zapatillas purple",valor);
-                            pago(zapato);
-                            break;
+                            total("Air purple",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Air multicolor" || zapato === "air multicolor" || zapato === "zapatillas multicolor" || zapato === "Zapatillas multicolor") {
+                    
+                        else if (zapato === "air multicolor") {
                             valor = 93;
-                            total("Zapatillas multicolor",valor);
-                            pago(zapato);
-                            break;
+                            total("Air multicolor",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Running pink" || zapato === "running pink" || zapato === "zapatillas pink" || zapato === "Zapatillas pink") {
+                    
+                        else if (zapato === "running pink") {
                             valor = 85;
-                            total("Zapatillas pink",valor);
-                            pago(zapato);
-                            break;
+                            total("Running pink",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Running orange" || zapato === "running orange" || zapato === "zapatillas orange" || zapato === "Zapatillas orange") {
+                    
+                        else if (zapato === "running orange") {
                             valor = 80;
-                            total("Zapatillas orange",valor);
-                            pago(zapato);
-                            break;
+                            total("Running orange",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Running green" || zapato === "running green" || zapato === "zapatillas green" || zapato === "Zapatillas green") {
+                    
+                        else if (zapato === "running green") {
                             valor = 80;
-                            total("Zapatillas green",valor);
-                            pago(zapato);
-                            break;
+                            total("Running green",valor);
+                            pushCarrito();
                         }
-                        
+                    
                         else {
                             alert ("No es ninguna de las opciones, si quiere puede elegir otra marca de nuestro catálogo");
                             break;
                         }
                     }
-                    
+                
                     else if (talla > 43 && talla < 47) {
-                        alert ("Tenemos:\nzapatillas dunk yellow a 85$\ndunk red a 90$\ndunk blue a 90$\nair black a 100$\nair white a 100$\nair purple a 95$\nair multicolor edición limitada a 110$\nrunning pink a 90$\nrunning orange a 85$\nrunning green a 85$");
-                        zapato = prompt ("¿Cual de estos 10 zapatos te gustaria elegir?");
-                        
-                        if (zapato === "Dunk yellow" || zapato === "dunk yellow" || zapato === "zapatillas yellow" || zapato === "Zapatillas yellow") {
+                        alert (catalogoNikeGrandes.join ("\n"));
+                        zapato = prompt ("¿Cual le gustaria elegir?").toLowerCase();
+                    
+                        if (zapato === "dunk yellow") {
                             valor = 85;
-                            total("Zapatillas yellow",valor);
-                            pago(zapato);
-                            break;
+                            total("Dunk yellow",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Dunk red" || zapato === "dunk red" || zapato === "zapatillas red" || zapato === "Zapatillas red") {
+                    
+                        else if (zapato === "dunk red") {
                             valor = 90;
-                            total("Zapatillas red",valor);
-                            pago(zapato);
-                            break;
+                            total("Dunk red",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Dunk blue" || zapato === "dunk blue" || zapato === "zapatillas blue" || zapato === "Zapatillas blue") {
+                    
+                        else if (zapato === "dunk blue") {
                             valor = 90;
-                            total("Zapatillas blue",valor);
-                            pago(zapato);
-                            break;
+                            total("Dunk blue",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Air black" || zapato === "air black" || zapato === "zapatillas black" || zapato === "Zapatillas black") {
+                    
+                        else if (zapato === "air black") {
                             valor = 100;
-                            total("Zapatillas black",valor);
-                            pago(zapato);
-                            break;
+                            total("Air black",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Air white" || zapato === "air white" || zapato === "zapatillas white" || zapato === "Zapatillas white") {
+                    
+                        else if (zapato === "air white") {
                             valor = 100;
-                            total("Zapatillas white",valor);
-                            pago(zapato);
-                            break;
+                            total("Air white",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Air purple" || zapato === "air purple" || zapato === "zapatillas purple" || zapato === "Zapatillas purple") {
+                    
+                        else if (zapato === "air purple") {
                             valor = 95;
-                            total("Zapatillas purple",valor);
-                            pago(zapato);
-                            break;
+                            total("Air purple",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Air multicolor" || zapato === "air multicolor" || zapato === "zapatillas multicolor" || zapato === "Zapatillas multicolor") {
+                    
+                        else if (zapato === "air multicolor") {
                             valor = 110;
-                            total("Zapatillas multicolor",valor);
-                            pago(zapato);
-                            break;
+                            total("Air multicolor",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Running pink" || zapato === "running pink" || zapato === "zapatillas pink" || zapato === "Zapatillas pink") {
+                    
+                        else if (zapato === "running pink") {
                             valor = 90;
-                            total("Zapatillas pink",valor);
-                            pago(zapato);
-                            break;
+                            total("Running pink",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Running orange" || zapato === "running orange" || zapato === "zapatillas orange" || zapato === "Zapatillas orange") {
+                    
+                        else if (zapato === "running orange") {
                             valor = 85;
-                            total("Zapatillas orange",valor);
-                            pago(zapato);
-                            break;
+                            total("Running orange",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Running green" || zapato === "running green" || zapato === "zapatillas green" || zapato === "Zapatillas green") {
+                    
+                        else if (zapato === "running green") {
                             valor = 85;
-                            total("Zapatillas green",valor);
-                            pago(zapato);
-                            break;
+                            total("Running green",valor);
+                            pushCarrito();
                         }
-                        
+                    
                         else {
                             alert ("No es ninguna de las opciones, si quiere puede elegir otra marca de nuestro catálogo");
                             break;
                         }
                     }
-                    
+
                     else {
                         alert ("No tenemos de esa talla lo siento");
                         break;
@@ -1808,261 +1659,237 @@ else if (interes === "si" && interesMarca === "no") {
                 }
 
                 // ADIDAS 
-                else if (marca === "adidas") {
+                else if (interes === "si" && marca === "adidas") {
                     alert (`Perfecto, tenemos zapatos ${marca} para ofrecerte`);
                     talla = parseInt(prompt("¿Que talla de zapato usas?"));
-                    
+                
                     if (talla > 33 && talla < 41) {
-                        alert ("Tenemos:\nzapatillas adizero yellow 75$\nadizero pink a 75$\nadizero blue a 80$\nlite racer black a 105$\nultraboost white a 110$\nlite racer grey a 85$\nlite racer red a 95$\nrunning purple a 80$\nrunning orange a 75$\nrunning green a 75$");
-                        zapato = prompt ("¿Cual de estos 10 zapatos te gustaria elegir?");
-                        
-                        if (zapato === "Zapatillas adizero yellow" || zapato === "zapatillas adizero yellow" || zapato === "zapatillas yellow" || zapato === "Zapatillas yellow") {
+                        alert (catalogoAdidasPequeños.join ("\n"));
+                        zapato = prompt ("¿Cual le gustaria elegir?").toLowerCase();
+                    
+                        if (zapato === "adizero yellow") {
                             valor = 75;
-                            total("Zapatillas yellow",valor);
-                            pago(zapato);
-                            break;
+                            total("Adizero yellow",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Zapatillas adizero pink" || zapato === "zapatillas adizero pink" || zapato === "zapatillas pink" || zapato === "Zapatillas pink") {
+                    
+                        else if (zapato === "adizero pink") {
                             valor = 75;
-                            total("Zapatillas pink",valor);
-                            pago(zapato);
-                            break;
+                            total("Adizero pink",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Zapatillas adizero blue" || zapato === "zapatillas adizero blue" || zapato === "zapatillas blue" || zapato === "Zapatillas blue") {
+                    
+                        else if (zapato === "adizero blue") {
                             valor = 80;
-                            total("Zapatillas blue",valor);
-                            pago(zapato);
-                            break;
+                            total("Adizero blue",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Zapatillas lite racer black" || zapato === "zapatillas lite racer black" || zapato === "zapatillas black" || zapato === "Zapatillas black") {
+                    
+                        else if (zapato === "lite racer black") {
                             valor = 105;
-                            total("Zapatillas black",valor);
-                            pago(zapato);
-                            break;
+                            total("Lite racer black",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Zapatillas ultraboost white" || zapato === "zapatillas ultraboost white" || zapato === "zapatillas white" || zapato === "Zapatillas white") {
+                    
+                        else if (zapato === "ultraboost white") {
                             valor = 110;
-                            total("Zapatillas white",valor);
-                            pago(zapato);
-                            break;
+                            total("Ultraboost white",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Zapatillas lite racer grey" || zapato === "zapatillas lite racer grey" || zapato === "zapatillas grey" || zapato === "Zapatillas grey") {
+                    
+                        else if (zapato === "lite racer grey") {
                             valor = 85;
-                            total("Zapatillas grey",valor);
-                            pago(zapato);
-                            break;
+                            total("Lite racer grey",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Zapatillas lite racer red" || zapato === "zapatillas lite racer red" || zapato === "zapatillas red" || zapato === "Zapatillas red") {
+                    
+                        else if (zapato === "lite racer red") {
                             valor = 95;
-                            total("Zapatillas red",valor);
-                            pago(zapato);
-                            break;
+                            total("Lite racer red",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Zapatillas running purple" || zapato === "zapatillas running purple" ||zapato === "zapatillas purple" || zapato === "Zapatillas purple") {
+                    
+                        else if (zapato === "running purple") {
                             valor = 80;
-                            total("Zapatillas purple",valor);
-                            pago(zapato);
-                            break;
+                            total("Running purple",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Zapatillas running orange" || zapato === "zapatillas running orange" || zapato === "zapatillas orange" || zapato === "Zapatillas orange") {
+                    
+                        else if (zapato === "running orange") {
                             valor = 75;
-                            total("Zapatillas orange",valor);
-                            pago(zapato);
-                            break;
+                            total("Running orange",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Zapatillas running green" || zapato === "zapatillas running green" || zapato === "zapatillas green" || zapato === "Zapatillas green") {
+                    
+                        else if (zapato === "running green") {
                             valor = 75;
-                            total("Zapatillas green",valor);
-                            pago(zapato);
-                            break;
+                            total("Running green",valor);
+                            pushCarrito();
                         }
-                        
+                    
                         else {
                             alert ("No es ninguna de las opciones, si quiere puede elegir otra marca de nuestro catálogo");
                             break;
                         }
                     }
-                    
+                
                     else if (talla > 40 && talla < 44) {
-                        alert ("Tenemos:\nzapatillas adizero yellow 80$\nadizero pink a 80$\nadizero blue a 85$\nlite racer black a 110$\nultraboost white a 115$\nlite racer grey a 90$\nlite racer red a 100$\nrunning purple a 85$\nrunning orange a 80$\nrunning green a 80$");
-                        zapato = prompt ("¿Cual de estos 10 zapatos te gustaria elegir?");
-                        
-                        if (zapato === "Adizero yellow" || zapato === "adizero yellow" || zapato === "zapatillas yellow" || zapato === "Zapatillas yellow") {
+                        alert (catalogoAdidasMedianos.join ("\n"));
+                        zapato = prompt ("¿Cual le gustaria elegir?").toLowerCase();
+                    
+                        if (zapato === "adizero yellow") {
                             valor = 80;
-                            total("Zapatillas yellow",valor);
-                            pago(zapato);
-                            break;
+                            total("Adizero yellow",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Adizero pink" || zapato === "adizero pink" || zapato === "zapatillas pink" || zapato === "Zapatillas pink") {
+                    
+                        else if (zapato === "adizero pink") {
                             valor = 80;
-                            total("Zapatillas pink",valor);
-                            pago(zapato);
-                            break;
+                            total("Adizero pink",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Adizero blue" || zapato === "adizero blue" || zapato === "zapatillas blue" || zapato === "Zapatillas blue") {
+                    
+                        else if (zapato === "adizero blue") {
                             valor = 85;
-                            total("Zapatillas blue",valor);
-                            pago(zapato);
-                            break;
+                            total("Adizero blue",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Lite racer black" || zapato === "lite racer black" || zapato === "zapatillas black" || zapato === "Zapatillas black") {
+                    
+                        else if (zapato === "lite racer black") {
                             valor = 110;
-                            total("Zapatillas black",valor);
-                            pago(zapato);
-                            break;
+                            total("Lite racer black",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Ultraboost white" || zapato === "ultraboost white" || zapato === "zapatillas white" || zapato === "Zapatillas white") {
+                    
+                        else if (zapato === "ultraboost white") {
                             valor = 115;
-                            total("Zapatillas white",valor);
-                            pago(zapato);
-                            break;
+                            total("Ultraboost white",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Lite racer grey" || zapato === "lite racer grey" || zapato === "zapatillas grey" || zapato === "Zapatillas grey") {
+                    
+                        else if (zapato === "lite racer grey") {
                             valor = 90;
-                            total("Zapatillas grey",valor);
-                            pago(zapato);
-                            break;
+                            total("Lite racer grey",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Lite racer red" || zapato === "lite racer red" || zapato === "zapatillas red" || zapato === "Zapatillas red") {
+                    
+                        else if (zapato === "lite racer red") {
                             valor = 100;
-                            total("Zapatillas red",valor);
-                            pago(zapato);
-                            break;
+                            total("Lite racer red",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Running purple" || zapato === "running purple" ||zapato === "zapatillas purple" || zapato === "Zapatillas purple") {
+                    
+                        else if (zapato === "running purple") {
                             valor = 85;
-                            total("Zapatillas purple",valor);
-                            pago(zapato);
-                            break;
+                            total("Running purple",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Running orange" || zapato === "running orange" || zapato === "zapatillas orange" || zapato === "Zapatillas orange") {
+                    
+                        else if (zapato === "running orange") {
                             valor = 80;
-                            total("Zapatillas orange",valor);
-                            pago(zapato);
-                            break;
+                            total("Running orange",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Running green" || zapato === "running green" || zapato === "zapatillas green" || zapato === "Zapatillas green") {
+                    
+                        else if (zapato === "running green") {
                             valor = 80;
-                            total("Zapatillas green",valor);
-                            pago(zapato);
-                            break;
+                            total("Running green",valor);
+                            pushCarrito();
                         }
-                        
+                    
                         else {
                             alert ("No es ninguna de las opciones, si quiere puede elegir otra marca de nuestro catálogo");
                             break;
                         }
                     }
-                    
+                
                     else if (talla > 43 && talla < 47) {
-                        alert ("Tenemos:\nzapatillas adizero yellow 85$\nadizero pink a 85$\nadizero blue a 90$\nlite racer black a 115$\nultraboost white a 120$\nlite racer grey a 95$\nlite racer red a 105$\nrunning purple a 90$\nrunning orange a 85$\nrunning green a 85$");
-                        zapato = prompt ("¿Cual de estos 10 zapatos te gustaria elegir?");
-                        
-                        if (zapato === "Adizero yellow" || zapato === "adizero yellow" || zapato === "zapatillas yellow" || zapato === "Zapatillas yellow") {
+                        alert (catalogoAdidasGrandes.join ("\n"));
+                        zapato = prompt ("¿Cual le gustaria elegir?").toLowerCase();
+                    
+                        if (zapato === "adizero yellow") {
                             valor = 85;
-                            total("Zapatillas yellow",valor);
-                            pago(zapato);
-                            break;
+                            total("Adizero yellow",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Adizero pink" || zapato === "adizero pink" || zapato === "zapatillas pink" || zapato === "Zapatillas pink") {
+                    
+                        else if (zapato === "adizero pink") {
                             valor = 85;
-                            total("Zapatillas pink",valor);
-                            pago(zapato);
-                            break;
+                            total("Adizero pink",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Adizero blue" || zapato === "adizero blue" || zapato === "zapatillas blue" || zapato === "Zapatillas blue") {
+                    
+                        else if (zapato === "adizero blue") {
                             valor = 90;
-                            total("Zapatillas blue",valor);
-                            pago(zapato);
-                            break;
+                            total("Adizero blue",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Lite racer black" || zapato === "lite racer black" || zapato === "zapatillas black" || zapato === "Zapatillas black") {
+                    
+                        else if (zapato === "lite racer black") {
                             valor = 115;
-                            total("Zapatillas black",valor);
-                            pago(zapato);
-                            break;
+                            total("Lite racer black",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Ultraboost white" || zapato === "ultraboost white" || zapato === "zapatillas white" || zapato === "Zapatillas white") {
+                    
+                        else if (zapato === "ultraboost white") {
                             valor = 120;
-                            total("Zapatillas white",valor);
-                            pago(zapato);
-                            break;
+                            total("Ultraboost white",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Lite racer grey" || zapato === "lite racer grey" || zapato === "zapatillas grey" || zapato === "Zapatillas grey") {
+                    
+                        else if (zapato === "lite racer grey") {
                             valor = 95;
-                            total("Zapatillas grey",valor);
-                            pago(zapato);
-                            break;
+                            total("Lite racer grey",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Lite racer red" || zapato === "lite racer red" || zapato === "zapatillas red" || zapato === "Zapatillas red") {
+                    
+                        else if (zapato === "lite racer red") {
                             valor = 105;
-                            total("Zapatillas red",valor);
-                            pago(zapato);
-                            break;
+                            total("Lite racer red",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Running purple" || zapato === "running purple" ||zapato === "zapatillas purple" || zapato === "Zapatillas purple") {
+                    
+                        else if (zapato === "running purple") {
                             valor = 90;
-                            total("Zapatillas purple",valor);
-                            pago(zapato);
-                            break;
+                            total("Running purple",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Running orange" || zapato === "running orange" || zapato === "zapatillas orange" || zapato === "Zapatillas orange") {
+                    
+                        else if (zapato === "running orange") {
                             valor = 85;
-                            total("Zapatillas orange",valor);
-                            pago(zapato);
-                            break;
+                            total("Running orange",valor);
+                            pushCarrito();
                         }
-                        
-                        else if (zapato === "Running green" || zapato === "running green" || zapato === "zapatillas green" || zapato === "Zapatillas green") {
+                    
+                        else if (zapato === "running green") {
                             valor = 85;
-                            total("Zapatillas green",valor);
-                            pago(zapato);
-                            break;
+                            total("Running green",valor);
+                            pushCarrito();
                         }
-                        
+                    
                         else {
                             alert ("No es ninguna de las opciones, si quiere puede elegir otra marca de nuestro catálogo");
                             break;
                         }
                     }
-                    
+                
                     else {
                         alert ("No tenemos de esa talla lo siento");
                         break;
                     }
                 }
-                
+
+                else if (interes === "no") {
+                    pago();
+                    break;
+                }
+            
                 else {
                     alert ("Lo siento, no tenemos de esa marca");
                     break;
                 }
             }
+            break;
         }
     }
 
