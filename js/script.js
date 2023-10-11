@@ -336,14 +336,23 @@ let catalogoAdidasGrandes = adidas.map ((producto) => `Los ${producto.modelo} ${
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Inicio
-let nombreUsuario = prompt ("¿Como te llamas?");
-alert (`Hola mucho gusto ${nombreUsuario}, bienvenido/a a nuestra tienda de zapatos`);
+while (bucle === 0) {
+    let nombreUsuario = prompt ("¿Cual es tu nombre?");
+
+    if (nombreUsuario === "") {
+        alert ("Introduzca un nombre");
+    }
+    else {
+        alert (`Hola mucho gusto ${nombreUsuario}, bienvenido/a a nuestra tienda de zapatos`);
+        break;
+    }
+}
 let interesMarca = prompt ("¿Buscas alguna marca de zapatos en especifico? (marcar si o no)");
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Bloque de codigo
-if (interes === "si" && interesMarca === "si" || interes === "si" && interesMarca === "Si") {
+if (interes === "si" && interesMarca === "si" || interes === "Si" && interesMarca === "Si") {
 
     while (dinero !== monto) {
         marca = prompt ("¿Que marca estas buscando?").toLowerCase();
@@ -1117,7 +1126,7 @@ if (interes === "si" && interesMarca === "si" || interes === "si" && interesMarc
         }
     }
 
-else if (interes === "si" && interesMarca === "no") {
+else if (interes === "si" && interesMarca === "no" || interes === "Si" && interesMarca === "No") {
 
     while (dinero !== monto) {
         marca = prompt ("Las marcas que tenemos disponibles son: Jordan, Under Armour, Puma, Adidas y Nike ¿Cual de estas 5 opciones te gustaria ver?").toLowerCase();
