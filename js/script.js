@@ -91,23 +91,27 @@ const pago = () => {
 // Arrays
 let jordan = [
     {
+        id: "Jr",
         url: "images/jordan red.jpg",
-        modelo: "Airjordan",
+        modelo: "Airjordan Red",
         valor: [48, 60]
     },
     {
+        id: "Jb",
         url: "images/jordan blue.jpg",
-        modelo: "Airjordan",
+        modelo: "Airjordan Blue",
         valor: [53, 65]
     },
     {
+        id: "Jw",
         url: "images/jordan white.webp",
-        modelo: "Jordan",
+        modelo: "Jordan White",
         valor: [45, 55]
     },
     {
+        id: "Jbl",
         url: "images/jordan black.jpg" ,
-        modelo: "Jordan",
+        modelo: "Jordan Black",
         valor: [55, 80]
     }
 ]
@@ -298,17 +302,16 @@ let adidas = [
 ]
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-
 // Recorridos
 // Jordan
 for (j of jordan) {
     container.innerHTML += `
-        <article class="imagen">
+        <article class="box-container">
             <img src="${j.url}" alt="imagen sobre ${j.modelo}">
-            <div>
+            <div class="box-body">
                 <h2>${j.modelo}</h2>
-                <p>talla</p>
-                <b>${j.valor}$</b>
+                <input type="number" min="36" max="46" placeholder="36" value>
+                <b>${j.valor[0]}$</b>
             </div>
         </article>`;
 }
