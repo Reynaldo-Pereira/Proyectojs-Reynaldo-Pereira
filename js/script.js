@@ -17,8 +17,6 @@ let monto = 0;
 let dinero = 1;
 let totalFinal = 0;
 let carrito = [];
-let container = document.createElement("div");
-console.log (container)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -91,268 +89,529 @@ const pago = () => {
 // Arrays
 let jordan = [
     {
-        id: "Jr",
-        url: "images/jordan red.jpg",
-        modelo: "Airjordan Red",
+        id: "j1",
+        url: "images/jordan black lisas.jpg",
+        modelo: "Airjordan Black",
         valor: [48, 60]
     },
     {
-        id: "Jb",
-        url: "images/jordan blue.jpg",
-        modelo: "Airjordan Blue",
+        id: "j2",
+        url: "images/jordan black white.jpg",
+        modelo: "Airjordan White",
         valor: [53, 65]
     },
     {
-        id: "Jw",
-        url: "images/jordan white.webp",
-        modelo: "Jordan White",
+        id: "j3",
+        url: "images/jordan black.jpg",
+        modelo: "Jordan Retro Red",
         valor: [45, 55]
     },
     {
-        id: "Jbl",
-        url: "images/jordan black.jpg" ,
-        modelo: "Jordan Black",
+        id: "j4",
+        url: "images/jordan blue.jpg" ,
+        modelo: "Jordan Retro Blue",
+        valor: [55, 80]
+    },
+    {
+        id: "j5",
+        url: "images/jordan grey.jpg",
+        modelo: "Jordan Retro Grey",
+        valor: [48, 60]
+    },
+    {
+        id: "j6",
+        url: "images/jordan orange.jpg",
+        modelo: "Jordan Orange Retro",
+        valor: [53, 65]
+    },
+    {
+        id: "j7",
+        url: "images/jordan white lisas.jpg",
+        modelo: "Airjordan White Retro",
+        valor: [45, 55]
+    },
+    {
+        id: "j8",
+        url: "images/jordan white.jpg" ,
+        modelo: "Airjordan Black Retro",
         valor: [55, 80]
     }
 ]
 
-let underArmourSmall = [
+let underArmour = [
     {
-        modelo: "Basketball",
+        id: "u1",
+        url: "images/Under Armour verde.jpeg",
+        modelo: "Running Green",
         color: "green",
         valor: 35
     },
     {
-        modelo: "Running",
+        id: "u2",
+        url: "images/Under armour rojos.jpeg",
+        modelo: "Running Red",
         color: "pink",
         valor: 40
-    }
-]
-
-let underArmourBig = [
-    {
-        modelo: "Training",
-        color: "white",
-        valor: 70
     },
     {
-        modelo: "Running",
+        id: "u3",
+        url: "images/under armour multicolor.jpeg",
+        modelo: "Basketball Multicolor",
+        color: "green",
+        valor: 35
+    },
+    {
+        id: "u4",
+        url: "images/under armour black white.jpeg",
+        modelo: "Running Black",
+        color: "green",
+        valor: 35
+    },
+    {
+        id: "u5",
+        url: "images/under armour black.jpeg",
+        modelo: "Classic Militar Black",
+        color: "green",
+        valor: 35
+    },
+    {
+        id: "u6",
+        url: "images/under armour blue.jpeg",
+        modelo: "Classic Running Blue",
         color: "pink",
-        valor: 70
+        valor: 40
     },
     {
-        modelo: "Running",
-        color: "black",
-        valor: 75
+        id: "u7",
+        url: "images/under armour pink.jpeg",
+        modelo: "Classic Running Pink",
+        color: "green",
+        valor: 35
     },
     {
-        modelo: "Basketball",
-        color: "multicolor",
-        valor: 90
-    },
-    {
-        modelo: "Basketball",
-        color: "red",
-        valor: 85
+        id: "u8",
+        url: "images/under armour red.jpeg",
+        modelo: "Under Retro",
+        color: "green",
+        valor: 35
     }
 ]
 
 let puma = [
     {
-        modelo: "Running",
-        color: "white",
-        valor: [38, 43, 48]
-    },
-    {
-        modelo: "Running",
-        color: "blue",
-        valor: [38, 43, 48]
-    },
-    {
-        modelo: "Running",
-        color: "red",
-        valor: [38, 43, 48]
-    },
-    {
-        modelo: "Classic",
-        color: "black",
-        valor: [45, 50, 55]
-    },
-    {
-        modelo: "Classic",
-        color: "pink",
-        valor: [40, 45, 50]
-    },
-    {
-        modelo: "Classic",
-        color: "purple",
-        valor: [43, 48, 53]
-    },
-    {
-        modelo: "Classic",
+        id: "",
+        url: "images/puma black green.jpg",
+        modelo: "Basketball",
         color: "green",
-        valor: [40, 45, 50]
+        valor: 35
     },
+    {
+        id: "",
+        url: "images/puma black.jpg",
+        modelo: "Running",
+        color: "pink",
+        valor: 40
+    },
+    {
+        id: "",
+        url: "images/puma blue.jpg",
+        modelo: "Basketball",
+        color: "green",
+        valor: 35
+    },
+    {
+        id: "",
+        url: "images/puma coral.jpg",
+        modelo: "Basketball",
+        color: "green",
+        valor: 35
+    },
+    {
+        id: "",
+        url: "images/puma grey.jpg",
+        modelo: "Basketball",
+        color: "green",
+        valor: 35
+    },
+    {
+        id: "",
+        url: "images/puma multicolor.jpg",
+        modelo: "Running",
+        color: "pink",
+        valor: 40
+    },
+    {
+        id: "",
+        url: "images/puma white pink.jpg",
+        modelo: "Basketball",
+        color: "green",
+        valor: 35
+    },
+    {
+        id: "",
+        url: "images/puma negro.jpg",
+        modelo: "Basketball",
+        color: "green",
+        valor: 35
+    },
+    {
+        id: "",
+        url: "images/puma orange.jpg",
+        modelo: "Basketball",
+        color: "green",
+        valor: 35
+    },
+    {
+        id: "",
+        url: "images/puma pink.jpg",
+        modelo: "Running",
+        color: "pink",
+        valor: 40
+    },
+    {
+        id: "",
+        url: "images/puma purple.jpg",
+        modelo: "Basketball",
+        color: "green",
+        valor: 35
+    },
+    {
+        id: "",
+        url: "images/puma rosita.jpg",
+        modelo: "Basketball",
+        color: "green",
+        valor: 35
+    }
 ]
 
 let nike = [
     {
-        modelo: "Dunk",
-        color: "yellow",
-        valor: [75, 80, 85]
+        id: "",
+        url: "images/nike bicolor.webp",
+        modelo: "Basketball",
+        color: "green",
+        valor: 35
     },
     {
-        modelo: "Dunk",
-        color: "red",
-        valor: [80, 85, 90]
-    },
-    {
-        modelo: "Dunk",
-        color: "blue",
-        valor: [80, 85, 90]
-    },
-    {
-        modelo: "Air",
-        color: "black",
-        valor: [90, 95, 100]
-    },
-    {
-        modelo: "Air",
-        color: "white",
-        valor: [90, 95, 100]
-    },
-    {
-        modelo: "Air",
-        color: "purple",
-        valor: [85, 90, 95]
-    },
-    {
-        modelo: "Air",
-        color: "multicolor",
-        valor: [88, 93, 110]
-    },
-    {
+        id: "",
+        url: "images/nike black white.webp",
         modelo: "Running",
         color: "pink",
-        valor: [80, 85, 90]
+        valor: 40
     },
     {
-        modelo: "Running",
-        color: "orange",
-        valor: [75, 80, 85]
-    },
-    {
-        modelo: "Running",
+        id: "",
+        url: "images/nike black red.webp",
+        modelo: "Basketball",
         color: "green",
-        valor: [75, 80, 85]
+        valor: 35
+    },
+    {
+        id: "",
+        url: "images/nike blue.webp",
+        modelo: "Basketball",
+        color: "green",
+        valor: 35
+    },
+    {
+        id: "",
+        url: "images/nike bordo.webp",
+        modelo: "Basketball",
+        color: "green",
+        valor: 35
+    },
+    {
+        id: "",
+        url: "images/nike green.webp",
+        modelo: "Running",
+        color: "pink",
+        valor: 40
+    },
+    {
+        id: "",
+        url: "images/nike grey.webp",
+        modelo: "Basketball",
+        color: "green",
+        valor: 35
+    },
+    {
+        id: "",
+        url: "images/nike gris claro.webp",
+        modelo: "Basketball",
+        color: "green",
+        valor: 35
+    },
+    {
+        id: "",
+        url: "images/nike moradito.webp",
+        modelo: "Basketball",
+        color: "green",
+        valor: 35
+    },
+    {
+        id: "",
+        url: "images/nike morado.webp",
+        modelo: "Running",
+        color: "pink",
+        valor: 40
+    },
+    {
+        id: "",
+        url: "images/nike red.webp",
+        modelo: "Basketball",
+        color: "green",
+        valor: 35
+    },
+    {
+        id: "",
+        url: "images/nike purple.webp",
+        modelo: "Basketball",
+        color: "green",
+        valor: 35
+    },
+    {
+        id: "",
+        url: "images/nike rosa.webp",
+        modelo: "Basketball",
+        color: "green",
+        valor: 35
+    },
+    {
+        id: "",
+        url: "images/nike tricolor.webp",
+        modelo: "Running",
+        color: "pink",
+        valor: 40
+    },
+    {
+        id: "",
+        url: "images/nike white orange.webp",
+        modelo: "Basketball",
+        color: "green",
+        valor: 35
+    },
+    {
+        id: "",
+        url: "images/nike white pink.webp",
+        modelo: "Basketball",
+        color: "green",
+        valor: 35
     }
 ]
 
 let adidas = [
     {
-        modelo: "Adizero",
-        color: "yellow",
-        valor: [75, 80, 85]
-    },
-    {
-        modelo: "Adizero",
-        color: "pink",
-        valor: [75, 80, 85]
-    },
-    {
-        modelo: "Adizero",
-        color: "blue",
-        valor: [80, 85, 90]
-    },
-    {
-        modelo: "Lite racer",
-        color: "black",
-        valor: [105, 110, 115]
-    },
-    {
-        modelo: "Lite racer",
-        color: "grey",
-        valor: [85, 90, 95]
-    },
-    {
-        modelo: "Lite racer",
-        color: "red",
-        valor: [95, 100, 105]
-    },
-    {
-        modelo: "Ultraboost",
-        color: "white",
-        valor: [110, 115, 120]
-    },
-    {
-        modelo: "Running",
-        color: "purple",
-        valor: [80, 85, 90]
-    },
-    {
-        modelo: "Running",
-        color: "orange",
-        valor: [75, 80, 85]
-    },
-    {
-        modelo: "Running",
+        id: "",
+        url: "images/adidas azul claro.avif",
+        modelo: "Basketball",
         color: "green",
-        valor: [75, 80, 85]
+        valor: 35
+    },
+    {
+        id: "",
+        url: "images/adidas azul.avif",
+        modelo: "Running",
+        color: "pink",
+        valor: 40
+    },
+    {
+        id: "",
+        url: "images/adidas bicolor.avif",
+        modelo: "Basketball",
+        color: "green",
+        valor: 35
+    },
+    {
+        id: "",
+        url: "images/adidas black.avif",
+        modelo: "Basketball",
+        color: "green",
+        valor: 35
+    },
+    {
+        id: "",
+        url: "images/adidas blue.avif",
+        modelo: "Basketball",
+        color: "green",
+        valor: 35
+    },
+    {
+        id: "",
+        url: "images/adidas coral.avif",
+        modelo: "Running",
+        color: "pink",
+        valor: 40
+    },
+    {
+        id: "",
+        url: "images/adidas green.avif",
+        modelo: "Basketball",
+        color: "green",
+        valor: 35
+    },
+    {
+        id: "",
+        url: "images/adidas grey.avif",
+        modelo: "Basketball",
+        color: "green",
+        valor: 35
+    },
+    {
+        id: "",
+        url: "images/adidas negro.avif",
+        modelo: "Basketball",
+        color: "green",
+        valor: 35
+    },
+    {
+        id: "",
+        url: "images/adidas orange.avif",
+        modelo: "Running",
+        color: "pink",
+        valor: 40
+    },
+    {
+        id: "",
+        url: "images/adidas red.avif",
+        modelo: "Basketball",
+        color: "green",
+        valor: 35
+    },
+    {
+        id: "",
+        url: "images/adidas rojos.avif",
+        modelo: "Basketball",
+        color: "green",
+        valor: 35
+    },
+    {
+        id: "",
+        url: "images/adidas tricolor.avif",
+        modelo: "Basketball",
+        color: "green",
+        valor: 35
+    },
+    {
+        id: "",
+        url: "images/adidas white green.avif",
+        modelo: "Running",
+        color: "pink",
+        valor: 40
+    },
+    {
+        id: "",
+        url: "images/adidas white orange.avif",
+        modelo: "Basketball",
+        color: "green",
+        valor: 35
+    },
+    {
+        id: "",
+        url: "images/adidas white.avif",
+        modelo: "Basketball",
+        color: "green",
+        valor: 35
     }
 ]
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 // Recorridos
 // Jordan
+let container = document.createElement("h1");
+container.innerHTML = "JORDAN"
+document.body.append(container);
+container = document.createElement("div");
 for (j of jordan) {
     container.innerHTML += `
         <article class="box-container">
             <img src="${j.url}" alt="imagen sobre ${j.modelo}">
             <div class="box-body">
-                <h2>${j.modelo}</h2>
+                <p>${j.modelo}</p>
                 <input type="number" min="36" max="46" placeholder="36" value>
                 <b>${j.valor[0]}$</b>
             </div>
         </article>`;
 }
-
-let catalogoJordanPequeños = jordan.map ((producto) => `Los ${producto.modelo} ${producto.color} tienen un valor de ${producto.valor[0]}$`);
-
-let catalogoJordanGrandes = jordan.map ((producto) => `Los ${producto.modelo} ${producto.color} tienen un valor de ${producto.valor[1]}$`);
+document.body.append(container);
 
 
 // Under Armour
-let catalogoUnderPequeños = underArmourSmall.map ((producto) => `Los ${producto.modelo} ${producto.color} tienen un valor de ${producto.valor}$`);
-
-let catalogoUnderGrandes = underArmourBig.map ((producto) => `Los ${producto.modelo} ${producto.color} tienen un valor de ${producto.valor}$`);
+container = document.createElement("h2");
+container.innerHTML = "UNDER ARMOUR"
+document.body.append(container);
+container = document.createElement("div");
+for (u of underArmour) {
+    container.innerHTML += `
+        <article class="box-container">
+            <img src="${u.url}" alt="imagen sobre ${u.modelo}">
+            <div class="box-body">
+                <p>${u.modelo}</p>
+                <input type="number" min="36" max="46" placeholder="36" value>
+                <b>${u.valor}$</b>
+            </div>
+        </article>`;
+}
+document.body.append(container);
 
 
 // Puma
-let catalogoPumaPequeños = puma.map ((producto) => `Los ${producto.modelo} ${producto.color} tienen un valor de ${producto.valor[0]}$`);
-
-let catalogoPumaMedianos = puma.map ((producto) => `Los ${producto.modelo} ${producto.color} tienen un valor de ${producto.valor[1]}$`);
-
-let catalogoPumaGrandes = puma.map ((producto) => `Los ${producto.modelo} ${producto.color} tienen un valor de ${producto.valor[2]}$`);
+container = document.createElement("h2");
+container.innerHTML = "PUMA"
+document.body.append(container);
+container = document.createElement("div");
+for (p of puma) {
+    container.innerHTML += `
+        <article class="box-container">
+            <img src="${p.url}" alt="imagen sobre ${p.modelo}">
+            <div class="box-body">
+                <p>${p.modelo}</p>
+                <input type="number" min="36" max="46" placeholder="36" value>
+                <b>${p.valor}$</b>
+            </div>
+        </article>`;
+}
+document.body.append(container);
 
 
 // Nike
-let catalogoNikePequeños = nike.map ((producto) => `Los ${producto.modelo} ${producto.color} tienen un valor de ${producto.valor[0]}$`);
-
-let catalogoNikeMedianos = nike.map ((producto) => `Los ${producto.modelo} ${producto.color} tienen un valor de ${producto.valor[1]}$`);
-
-let catalogoNikeGrandes = nike.map ((producto) => `Los ${producto.modelo} ${producto.color} tienen un valor de ${producto.valor[2]}$`);
+container = document.createElement("h2");
+container.innerHTML = "NIKE"
+document.body.append(container);
+container = document.createElement("div");
+for (n of nike) {
+    container.innerHTML += `
+        <article class="box-container">
+            <img src="${n.url}" alt="imagen sobre ${n.modelo}">
+            <div class="box-body">
+                <p>${n.modelo}</p>
+                <input type="number" min="36" max="46" placeholder="36" value>
+                <b>${n.valor}$</b>
+            </div>
+        </article>`;
+}
+document.body.append(container);
 
 
 // Adidas
-let catalogoAdidasPequeños = adidas.map ((producto) => `Los ${producto.modelo} ${producto.color} tienen un valor de ${producto.valor[0]}$`);
-
-let catalogoAdidasMedianos = adidas.map ((producto) => `Los ${producto.modelo} ${producto.color} tienen un valor de ${producto.valor[1]}$`);
-
-let catalogoAdidasGrandes = adidas.map ((producto) => `Los ${producto.modelo} ${producto.color} tienen un valor de ${producto.valor[2]}$`);
+container = document.createElement("h2");
+container.innerHTML = "ADIDAS"
+document.body.append(container);
+container = document.createElement("div");
+for (a of adidas) {
+    container.innerHTML += `
+        <article class="box-container">
+            <img src="${a.url}" alt="imagen sobre ${a.modelo}">
+            <div class="box-body">
+                <p>${a.modelo}</p>
+                <input type="number" min="36" max="46" placeholder="36" value>
+                <b>${a.valor}$</b>
+            </div>
+        </article>`;
+}
+document.body.append(container);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-document.body.append(container);
 
 
 
