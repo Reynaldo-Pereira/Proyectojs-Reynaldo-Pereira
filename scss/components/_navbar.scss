@@ -1,0 +1,14 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    font-size: 30px;
+    color: white;
+
+    img {
+        object-fit: cover;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+}

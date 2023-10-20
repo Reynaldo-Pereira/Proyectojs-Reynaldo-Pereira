@@ -33,40 +33,63 @@ const total = (modelo, costo) => {
     return monto;
 }
 
-const pushCarrito = () => {
-    compra = prompt ("¿Desea agregar al carrito? (marcar si o no)");
+const agregarCarritoJordan = (id) => {
+    const productoJordan = jordan.find((j) => j.id === id);
 
-    if (compra === "si") {
-        unidades = parseInt (prompt ("¿Cuantas unidades quiere?"));
-        carrito.push({zapato, unidades, monto});
-        interes = prompt ("¿Desea seguir comprando?");
+    if (productoJordan && !carrito.some((i) => i.id === id)) {
+        const agregado = document.getElementById(`agregar-${id}`);
+        agregado.innerHTML = "Agregado";
+        agregado.disabled = true;
 
-        if (interes === "si") {
-            marca = prompt ("¿Que marca estas buscando?");
-        }
-        else {
-            alert ("A continuación le mostraremos su carrito");
-            carrito.forEach ((carritoFinal) => {
-                alert (`Modelo: ${carritoFinal.zapato}; unidades: ${carritoFinal.unidades}; total a pagar por modelo ${carritoFinal.unidades * carritoFinal.monto}$`);
-            })
-            totalFinal = carrito.reduce ((acumulador, el) => acumulador + el.unidades * el.monto, 0);
-            alert (`El costo final por su compra es de ${totalFinal}$`);
-        }
+        carrito.push(productoJordan)
     }
-    else {
-        interes = prompt ("¿Desea seguir comprando?");
+}
 
-        if (interes === "si") {
-            marca = prompt ("¿Que marca estas buscando?");
-        }
-        else {
-            alert ("A continuación le mostraremos su carrito");
-            carrito.forEach ((carritoFinal) => {
-                alert (`Modelo: ${carritoFinal.zapato}; unidades: ${carritoFinal.unidades}; total a pagar por modelo ${carritoFinal.unidades * carritoFinal.monto}$`);
-            })
-            totalFinal = carrito.reduce ((acumulador, el) => acumulador + el.unidades * el.monto, 0);
-            alert (`El costo final por su compra es de ${totalFinal}$`);
-        }
+const agregarCarritoUnder = (id) => {
+    const productoUnder = underArmour.find((u) => u.id === id);
+
+    if (productoUnder && !carrito.some((i) => i.id === id)) {
+        const agregado = document.getElementById(`agregar-${id}`);
+        agregado.innerHTML = "Agregado";
+        agregado.disabled = true;
+
+        carrito.push(productoUnder)
+    }
+}
+
+const agregarCarritoPuma = (id) => {
+    const productoPuma = puma.find((p) => p.id === id);
+
+    if (productoPuma && !carrito.some((i) => i.id === id)) {
+        const agregado = document.getElementById(`agregar-${id}`);
+        agregado.innerHTML = "Agregado";
+        agregado.disabled = true;
+
+        carrito.push(productoPuma)
+    }
+}
+
+const agregarCarritoNike = (id) => {
+    const productoNike = nike.find((n) => n.id === id);
+
+    if (productoNike && !carrito.some((i) => i.id === id)) {
+        const agregado = document.getElementById(`agregar-${id}`);
+        agregado.innerHTML = "Agregado";
+        agregado.disabled = true;
+
+        carrito.push(productoNike)
+    }
+}
+
+const agregarCarritoAdidas = (id) => {
+    const productoAdidas = adidas.find((a) => a.id === id);
+
+    if (productoAdidas && !carrito.some((i) => i.id === id)) {
+        const agregado = document.getElementById(`agregar-${id}`);
+        agregado.innerHTML = "Agregado";
+        agregado.disabled = true;
+
+        carrito.push(productoAdidas)
     }
 }
 
@@ -143,257 +166,237 @@ let underArmour = [
         id: "u1",
         url: "images/Under Armour verde.jpeg",
         modelo: "Running Green",
-        color: "green",
         valor: 35
     },
     {
         id: "u2",
         url: "images/Under armour rojos.jpeg",
         modelo: "Running Red",
-        color: "pink",
         valor: 40
     },
     {
         id: "u3",
         url: "images/under armour multicolor.jpeg",
         modelo: "Basketball Multicolor",
-        color: "green",
         valor: 35
     },
     {
         id: "u4",
         url: "images/under armour black white.jpeg",
         modelo: "Running Black",
-        color: "green",
         valor: 35
     },
     {
         id: "u5",
         url: "images/under armour black.jpeg",
         modelo: "Classic Militar Black",
-        color: "green",
         valor: 35
     },
     {
         id: "u6",
         url: "images/under armour blue.jpeg",
         modelo: "Classic Running Blue",
-        color: "pink",
         valor: 40
     },
     {
         id: "u7",
         url: "images/under armour pink.jpeg",
         modelo: "Classic Running Pink",
-        color: "green",
         valor: 35
     },
     {
         id: "u8",
         url: "images/under armour red.jpeg",
         modelo: "Under Retro",
-        color: "green",
         valor: 35
     }
 ]
 
 let puma = [
     {
-        id: "",
+        id: "p1",
         url: "images/puma black green.jpg",
-        modelo: "Basketball",
-        color: "green",
+        modelo: "Running Forever Run Black Green",
         valor: 35
     },
     {
-        id: "",
+        id: "p2",
         url: "images/puma black.jpg",
-        modelo: "Running",
-        color: "pink",
+        modelo: "Running Forever Run Black",
         valor: 40
     },
     {
-        id: "",
+        id: "p3",
         url: "images/puma blue.jpg",
-        modelo: "Basketball",
-        color: "green",
+        modelo: "Running Forever Run Blue",
         valor: 35
     },
     {
-        id: "",
+        id: "p4",
         url: "images/puma coral.jpg",
-        modelo: "Basketball",
-        color: "green",
+        modelo: "Running Forever Run Pink",
         valor: 35
     },
     {
-        id: "",
+        id: "p5",
         url: "images/puma grey.jpg",
-        modelo: "Basketball",
-        color: "green",
+        modelo: "Running Forever Run",
         valor: 35
     },
     {
-        id: "",
+        id: "p6",
         url: "images/puma multicolor.jpg",
-        modelo: "Running",
-        color: "pink",
+        modelo: "Basic Multicolor",
         valor: 40
     },
     {
-        id: "",
+        id: "p7",
         url: "images/puma white pink.jpg",
-        modelo: "Basketball",
-        color: "green",
+        modelo: "Rider Tech White",
         valor: 35
     },
     {
-        id: "",
+        id: "p8",
         url: "images/puma negro.jpg",
-        modelo: "Basketball",
-        color: "green",
+        modelo: "Rider Tech Black",
         valor: 35
     },
     {
-        id: "",
+        id: "p9",
         url: "images/puma orange.jpg",
-        modelo: "Basketball",
-        color: "green",
+        modelo: "Training Orange",
         valor: 35
     },
     {
-        id: "",
+        id: "p10",
         url: "images/puma pink.jpg",
-        modelo: "Running",
-        color: "pink",
+        modelo: "Training Pink",
         valor: 40
     },
     {
-        id: "",
+        id: "p11",
         url: "images/puma purple.jpg",
-        modelo: "Basketball",
-        color: "green",
+        modelo: "Rider Tech Purple",
         valor: 35
     },
     {
-        id: "",
+        id: "p12",
         url: "images/puma rosita.jpg",
-        modelo: "Basketball",
-        color: "green",
+        modelo: "Rider Tech Pink",
         valor: 35
     }
 ]
 
 let nike = [
     {
-        id: "",
+        id: "n1",
         url: "images/nike bicolor.webp",
-        modelo: "Basketball",
+        modelo: "Infinity Run",
         color: "green",
         valor: 35
     },
     {
-        id: "",
+        id: "n2",
         url: "images/nike black white.webp",
-        modelo: "Running",
+        modelo: "Infinity Run",
         color: "pink",
         valor: 40
     },
     {
-        id: "",
+        id: "n3",
         url: "images/nike black red.webp",
-        modelo: "Basketball",
+        modelo: "Infinity Run",
         color: "green",
         valor: 35
     },
     {
-        id: "",
+        id: "n4",
         url: "images/nike blue.webp",
-        modelo: "Basketball",
+        modelo: "Infinity Run",
         color: "green",
         valor: 35
     },
     {
-        id: "",
+        id: "n5",
         url: "images/nike bordo.webp",
-        modelo: "Basketball",
+        modelo: "Dunk Low",
         color: "green",
         valor: 35
     },
     {
-        id: "",
+        id: "n6",
         url: "images/nike green.webp",
-        modelo: "Running",
+        modelo: "Dunk Low",
         color: "pink",
         valor: 40
     },
     {
-        id: "",
+        id: "n7",
         url: "images/nike grey.webp",
-        modelo: "Basketball",
+        modelo: "Dunk Low",
         color: "green",
         valor: 35
     },
     {
-        id: "",
+        id: "n8",
         url: "images/nike gris claro.webp",
-        modelo: "Basketball",
+        modelo: "Dunk Low",
         color: "green",
         valor: 35
     },
     {
-        id: "",
+        id: "n9",
         url: "images/nike moradito.webp",
-        modelo: "Basketball",
+        modelo: "Infinity Training",
         color: "green",
         valor: 35
     },
     {
-        id: "",
+        id: "n10",
         url: "images/nike morado.webp",
-        modelo: "Running",
+        modelo: "Infinity Training",
         color: "pink",
         valor: 40
     },
     {
-        id: "",
+        id: "n11",
         url: "images/nike red.webp",
-        modelo: "Basketball",
+        modelo: "Infinity Training",
         color: "green",
         valor: 35
     },
     {
-        id: "",
+        id: "n12",
         url: "images/nike purple.webp",
-        modelo: "Basketball",
+        modelo: "Infinity Training",
         color: "green",
         valor: 35
     },
     {
-        id: "",
+        id: "n13",
         url: "images/nike rosa.webp",
-        modelo: "Basketball",
+        modelo: "Air Presto",
         color: "green",
         valor: 35
     },
     {
-        id: "",
+        id: "n14",
         url: "images/nike tricolor.webp",
-        modelo: "Running",
+        modelo: "Air Presto",
         color: "pink",
         valor: 40
     },
     {
-        id: "",
+        id: "n15",
         url: "images/nike white orange.webp",
-        modelo: "Basketball",
+        modelo: "Air Presto",
         color: "green",
         valor: 35
     },
     {
-        id: "",
+        id: "n16",
         url: "images/nike white pink.webp",
-        modelo: "Basketball",
+        modelo: "Air Presto",
         color: "green",
         valor: 35
     }
@@ -401,114 +404,114 @@ let nike = [
 
 let adidas = [
     {
-        id: "",
+        id: "a1",
         url: "images/adidas azul claro.avif",
-        modelo: "Basketball",
+        modelo: "Duramo SL",
         color: "green",
         valor: 35
     },
     {
-        id: "",
+        id: "a2",
         url: "images/adidas azul.avif",
-        modelo: "Running",
+        modelo: "Duramo SL",
         color: "pink",
         valor: 40
     },
     {
-        id: "",
+        id: "a3",
         url: "images/adidas bicolor.avif",
-        modelo: "Basketball",
+        modelo: "Duramo SL",
         color: "green",
         valor: 35
     },
     {
-        id: "",
+        id: "a4",
         url: "images/adidas black.avif",
-        modelo: "Basketball",
+        modelo: "Duramo SL",
         color: "green",
         valor: 35
     },
     {
-        id: "",
+        id: "a5",
         url: "images/adidas blue.avif",
-        modelo: "Basketball",
+        modelo: "Lite Racer",
         color: "green",
         valor: 35
     },
     {
-        id: "",
+        id: "a6",
         url: "images/adidas coral.avif",
-        modelo: "Running",
+        modelo: "Lite Racer",
         color: "pink",
         valor: 40
     },
     {
-        id: "",
-        url: "images/adidas green.avif",
-        modelo: "Basketball",
-        color: "green",
-        valor: 35
-    },
-    {
-        id: "",
-        url: "images/adidas grey.avif",
-        modelo: "Basketball",
-        color: "green",
-        valor: 35
-    },
-    {
-        id: "",
+        id: "a7",
         url: "images/adidas negro.avif",
-        modelo: "Basketball",
+        modelo: "Lite Racer",
         color: "green",
         valor: 35
     },
     {
-        id: "",
-        url: "images/adidas orange.avif",
-        modelo: "Running",
-        color: "pink",
-        valor: 40
-    },
-    {
-        id: "",
-        url: "images/adidas red.avif",
-        modelo: "Basketball",
-        color: "green",
-        valor: 35
-    },
-    {
-        id: "",
-        url: "images/adidas rojos.avif",
-        modelo: "Basketball",
-        color: "green",
-        valor: 35
-    },
-    {
-        id: "",
+        id: "a8",
         url: "images/adidas tricolor.avif",
-        modelo: "Basketball",
+        modelo: "Lite Racer",
         color: "green",
         valor: 35
     },
     {
-        id: "",
-        url: "images/adidas white green.avif",
-        modelo: "Running",
+        id: "a9",
+        url: "images/adidas green.avif",
+        modelo: "Rapid Move",
+        color: "green",
+        valor: 35
+    },
+    {
+        id: "a10",
+        url: "images/adidas orange.avif",
+        modelo: "Rapid Move",
         color: "pink",
         valor: 40
     },
     {
-        id: "",
-        url: "images/adidas white orange.avif",
-        modelo: "Basketball",
+        id: "a11",
+        url: "images/adidas red.avif",
+        modelo: "Rapid Move",
         color: "green",
         valor: 35
     },
     {
-        id: "",
+        id: "a12",
+        url: "images/adidas white green.avif",
+        modelo: "Rapid Move",
+        color: "green",
+        valor: 35
+    },
+    {
+        id: "a13",
+        url: "images/adidas grey.avif",
+        modelo: "Dropset",
+        color: "green",
+        valor: 35
+    },
+    {
+        id: "a14",
+        url: "images/adidas rojos.avif",
+        modelo: "Dropset",
+        color: "pink",
+        valor: 40
+    },
+    {
+        id: "a15",
+        url: "images/adidas white orange.avif",
+        modelo: "Dropset",
+        color: "green",
+        valor: 35
+    },
+    {
+        id: "a16",
         url: "images/adidas white.avif",
-        modelo: "Basketball",
+        modelo: "Dropset",
         color: "green",
         valor: 35
     }
@@ -520,6 +523,7 @@ let adidas = [
 let container = document.createElement("h1");
 container.innerHTML = "JORDAN"
 document.body.append(container);
+
 container = document.createElement("div");
 for (j of jordan) {
     container.innerHTML += `
@@ -529,6 +533,7 @@ for (j of jordan) {
                 <p>${j.modelo}</p>
                 <input type="number" min="36" max="46" placeholder="36" value>
                 <b>${j.valor[0]}$</b>
+                <button onclick = "agregarCarritoJordan('${j.id}')" id= "agregar-${j.id}">Agregar al carrito</button>
             </div>
         </article>`;
 }
@@ -539,6 +544,7 @@ document.body.append(container);
 container = document.createElement("h2");
 container.innerHTML = "UNDER ARMOUR"
 document.body.append(container);
+
 container = document.createElement("div");
 for (u of underArmour) {
     container.innerHTML += `
@@ -548,6 +554,7 @@ for (u of underArmour) {
                 <p>${u.modelo}</p>
                 <input type="number" min="36" max="46" placeholder="36" value>
                 <b>${u.valor}$</b>
+                <button onclick = "agregarCarritoUnder('${u.id}')" id= "agregar-${u.id}">Agregar al carrito</button>
             </div>
         </article>`;
 }
@@ -558,6 +565,7 @@ document.body.append(container);
 container = document.createElement("h2");
 container.innerHTML = "PUMA"
 document.body.append(container);
+
 container = document.createElement("div");
 for (p of puma) {
     container.innerHTML += `
@@ -567,6 +575,7 @@ for (p of puma) {
                 <p>${p.modelo}</p>
                 <input type="number" min="36" max="46" placeholder="36" value>
                 <b>${p.valor}$</b>
+                <button onclick = "agregarCarritoPuma('${p.id}')" id= "agregar-${p.id}">Agregar al carrito</button>
             </div>
         </article>`;
 }
@@ -577,6 +586,7 @@ document.body.append(container);
 container = document.createElement("h2");
 container.innerHTML = "NIKE"
 document.body.append(container);
+
 container = document.createElement("div");
 for (n of nike) {
     container.innerHTML += `
@@ -586,6 +596,7 @@ for (n of nike) {
                 <p>${n.modelo}</p>
                 <input type="number" min="36" max="46" placeholder="36" value>
                 <b>${n.valor}$</b>
+                <button onclick = "agregarCarritoNike('${n.id}')" id= "agregar-${n.id}">Agregar al carrito</button>
             </div>
         </article>`;
 }
@@ -596,6 +607,7 @@ document.body.append(container);
 container = document.createElement("h2");
 container.innerHTML = "ADIDAS"
 document.body.append(container);
+
 container = document.createElement("div");
 for (a of adidas) {
     container.innerHTML += `
@@ -605,6 +617,7 @@ for (a of adidas) {
                 <p>${a.modelo}</p>
                 <input type="number" min="36" max="46" placeholder="36" value>
                 <b>${a.valor}$</b>
+                <button onclick = "agregarCarritoAdidas('${a.id}')" id= "agregar-${a.id}">Agregar al carrito</button>
             </div>
         </article>`;
 }
