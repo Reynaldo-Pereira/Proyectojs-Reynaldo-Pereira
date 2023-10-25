@@ -1,4 +1,5 @@
 body {
+    padding-top: 120px;
     background-image: linear-gradient(80deg, rgb(167, 37, 253), black);
 
     h1 , h2 {
@@ -51,9 +52,38 @@ body {
     }
 
     button {
+        cursor: pointer;
         background-color: rgb(167, 37, 253);
         padding: 10px;
         border-radius: 10px;
         border: 2px solid rgb(255, 255, 255);
     }
+}
+
+.offcanvas {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+}
+
+.offcanvas-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.box-carrito {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        padding-left: 0px;
+    }
+}
+
+.carrito-body {
+    display: grid;
 }

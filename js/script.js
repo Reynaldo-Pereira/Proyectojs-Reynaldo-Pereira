@@ -17,10 +17,32 @@ let monto = 0;
 let dinero = 1;
 let totalFinal = 0;
 let carrito = [];
+const carritoHtml = document.querySelector(".offcanvas-body");
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Funciones 
+const save = () => {
+    localStorage.setItem("carrito" , JSON.stringify(carrito));
+}
+
+const ventanaCarrito = () => {
+    const carritoLocal = JSON.parse(localStorage.getItem("carrito"));
+
+    carritoLocal.forEach(producto => { 
+        carritoHtml.innerHTML += `
+            <article class="box-carrito">
+                <img src="${producto.url}" alt="imagen sobre ${producto.modelo}">
+                <div class="carrito-body">
+                    <p class = "x1">${producto.modelo}</p>
+                    <b class = "x2">${producto.valor}$</b>
+                    <p class = "x3">unidades: 1</p>
+                    <button class = "x4">Borrar</button>
+                </div>
+            </article>`
+    });
+}
+
 const totalConDescuento = (modelo, costo, descuento) => {
     monto = costo - descuento;
     alert (`Los ${modelo} con descuento te quedarian en ${monto}$`);
@@ -40,8 +62,9 @@ const agregarCarritoJordan = (id) => {
         const agregado = document.getElementById(`agregar-${id}`);
         agregado.innerHTML = "Agregado";
         agregado.disabled = true;
-
         carrito.push(productoJordan)
+        save();
+        ventanaCarrito();
     }
 }
 
@@ -52,8 +75,9 @@ const agregarCarritoUnder = (id) => {
         const agregado = document.getElementById(`agregar-${id}`);
         agregado.innerHTML = "Agregado";
         agregado.disabled = true;
-
-        carrito.push(productoUnder)
+        carrito.push(productoUnder);
+        save();
+        ventanaCarrito();
     }
 }
 
@@ -64,8 +88,9 @@ const agregarCarritoPuma = (id) => {
         const agregado = document.getElementById(`agregar-${id}`);
         agregado.innerHTML = "Agregado";
         agregado.disabled = true;
-
-        carrito.push(productoPuma)
+        carrito.push(productoPuma);
+        save();
+        ventanaCarrito();
     }
 }
 
@@ -76,8 +101,9 @@ const agregarCarritoNike = (id) => {
         const agregado = document.getElementById(`agregar-${id}`);
         agregado.innerHTML = "Agregado";
         agregado.disabled = true;
-
-        carrito.push(productoNike)
+        carrito.push(productoNike);
+        save();
+        ventanaCarrito();
     }
 }
 
@@ -88,8 +114,9 @@ const agregarCarritoAdidas = (id) => {
         const agregado = document.getElementById(`agregar-${id}`);
         agregado.innerHTML = "Agregado";
         agregado.disabled = true;
-
-        carrito.push(productoAdidas)
+        carrito.push(productoAdidas);
+        save();
+        ventanaCarrito();
     }
 }
 
@@ -115,49 +142,49 @@ let jordan = [
         id: "j1",
         url: "images/jordan black lisas.jpg",
         modelo: "Airjordan Black",
-        valor: [48, 60]
+        valor: 48
     },
     {
         id: "j2",
         url: "images/jordan black white.jpg",
         modelo: "Airjordan White",
-        valor: [53, 65]
+        valor: 53
     },
     {
         id: "j3",
         url: "images/jordan black.jpg",
         modelo: "Jordan Retro Red",
-        valor: [45, 55]
+        valor: 45
     },
     {
         id: "j4",
         url: "images/jordan blue.jpg" ,
         modelo: "Jordan Retro Blue",
-        valor: [55, 80]
+        valor: 55
     },
     {
         id: "j5",
         url: "images/jordan grey.jpg",
         modelo: "Jordan Retro Grey",
-        valor: [48, 60]
+        valor: 48
     },
     {
         id: "j6",
         url: "images/jordan orange.jpg",
         modelo: "Jordan Orange Retro",
-        valor: [53, 65]
+        valor: 53
     },
     {
         id: "j7",
         url: "images/jordan white lisas.jpg",
         modelo: "Airjordan White Retro",
-        valor: [45, 55]
+        valor: 45
     },
     {
         id: "j8",
         url: "images/jordan white.jpg" ,
         modelo: "Airjordan Black Retro",
-        valor: [55, 80]
+        valor: 55
     }
 ]
 
@@ -532,7 +559,7 @@ for (j of jordan) {
             <div class="box-body">
                 <p>${j.modelo}</p>
                 <input type="number" min="36" max="46" placeholder="36" value>
-                <b>${j.valor[0]}$</b>
+                <b>${j.valor}$</b>
                 <button onclick = "agregarCarritoJordan('${j.id}')" id= "agregar-${j.id}">Agregar al carrito</button>
             </div>
         </article>`;
@@ -623,9 +650,9 @@ for (a of adidas) {
 }
 document.body.append(container);
 
+ventanaCarrito();
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 
 
 
