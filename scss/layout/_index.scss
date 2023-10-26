@@ -7,14 +7,15 @@ body {
         font-size: 50px;
         color: rgb(255, 255, 255);
     }
+}
 
-    div {
-        display: flex;
-        flex-wrap: wrap;
-        width: 100%;
-        padding: 20px 0px 20px 20px;
-        gap: 10px;
-    }
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 20px 0px 20px 20px;
+    gap: 10px;
 }
 
 .box-container {
@@ -63,12 +64,14 @@ body {
 .offcanvas {
     display: flex;
     flex-direction: column;
+    flex-wrap: nowrap;
     padding: 30px;
 }
 
 .offcanvas-body {
     display: flex;
     flex-direction: column;
+    gap: 30px;
 }
 
 .box-carrito {
