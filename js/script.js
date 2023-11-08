@@ -1,8 +1,7 @@
 // Variables
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-let carritoHtml = document.querySelector(".offcanvas-body");
-let carritoFooter = document.querySelector(".offcanvas-footer")
-const total = carrito.reduce((acc, el) => acc + el.valor * el.unidades, 0);
+let carritoWindow = document.getElementById("offcanvasNavbar");
+let carritoBody = document.getElementById("offcanvas-html");
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -11,20 +10,86 @@ const save = () => {
     localStorage.setItem("carrito" , JSON.stringify(carrito));
 }
 
+const ventanaCarrito = () => {
+    carritoBody.innerHTML = "";
+    let carritoHtml = document.createElement("div");
+    carritoHtml.className = "offcanvas-body";
+    carrito.forEach(producto => {
+        carritoHtml.innerHTML += `
+            <article class= "box-carrito">
+            <img src="${producto.url}" alt="imagen sobre ${producto.modelo}">
+                <div class="carrito-body">
+                    <p class = "x1">${producto.modelo}</p>
+                    <button onclick = "restar()" class = "x2 restar"> - </button>
+                    <p class = "x3">Unidades: ${producto.unidades}</p>
+                    <button onclick = "sumar()" class = "x4 sumar"> + </button>
+                    <button onclick = "restarTalla()" class = "x5 restar"> - </button>
+                    <p class = "x6">Talla <b>${producto.talla}</b></p>
+                    <button onclick = "sumarTalla()" class = "x7 sumar"> + </button>
+                    <b class = "x8">Costo: ${producto.valor}$</b>
+                    <b class = "x9">Total a pagar: ${producto.valor * producto.unidades}$</b>
+                    <button onclick = "eliminarProducto()" class = "x10">Borrar</button>
+                </div>
+            </article>
+            `
+    });
+    carritoBody.append(carritoHtml);
+
+    let total = carrito.reduce((acc, el) => acc + el.valor * el.unidades, 0);
+    let carritoFooter = document.createElement("div");
+    carritoFooter.className = "offcanvas-footer";
+    carritoFooter.innerHTML = `<p>TOTAL  ${total}$</p>`;
+    carritoBody.append(carritoFooter);
+}
+
+
 const restar = () => {
     const productId = carrito.find((p) => p.id);
 
-    productId.unidades--
-    save();
-    ventanaCarrito();
+    if (productId.unidades > 1) {
+        productId.unidades--
+        save();
+        ventanaCarrito();
+    }
+}
+
+const restarTalla = () => {
+    const productId = carrito.find((t) => t.id);
+
+    if (productId.talla > 34) {
+        productId.talla--
+        save();
+        ventanaCarrito();
+    }
+    else {
+        alert ("No tenemos esa talla");
+    }
 }
 
 const sumar = () => {
     const productId = carrito.find((p) => p.id);
     
-    productId.unidades++
-    save();
-    ventanaCarrito();
+    if (productId.unidades < 10) {
+        productId.unidades++
+        save();
+        ventanaCarrito();
+    }
+    else {
+        alert ("No tenemos tantas unidades");
+    }
+}
+
+const sumarTalla = () => {
+    const productId = carrito.find((t) => t.id);
+
+    if (productId.talla < 47) {
+        productId.talla++
+        save();
+        ventanaCarrito();
+    }
+    else {
+        alert ("No tenemos esa talla");
+    }
 }
 
 const eliminarProducto = () => {
@@ -35,6 +100,7 @@ const eliminarProducto = () => {
     });
 
     save();
+    ventanaCarrito();
 }
 
 const agregarCarritoJordan = (id) => {
@@ -46,6 +112,7 @@ const agregarCarritoJordan = (id) => {
         agregado.disabled = true;
         carrito.push(productoJordan)
         save();
+        ventanaCarrito();
     }
 }
 
@@ -58,6 +125,7 @@ const agregarCarritoUnder = (id) => {
         agregado.disabled = true;
         carrito.push(productoUnder);
         save();
+        ventanaCarrito();
     }
 }
 
@@ -70,6 +138,7 @@ const agregarCarritoPuma = (id) => {
         agregado.disabled = true;
         carrito.push(productoPuma);
         save();
+        ventanaCarrito();
     }
 }
 
@@ -82,6 +151,7 @@ const agregarCarritoNike = (id) => {
         agregado.disabled = true;
         carrito.push(productoNike);
         save();
+        ventanaCarrito();
     }
 }
 
@@ -94,6 +164,7 @@ const agregarCarritoAdidas = (id) => {
         agregado.disabled = true;
         carrito.push(productoAdidas);
         save();
+        ventanaCarrito();
     }
 }
 
@@ -769,29 +840,7 @@ for (let i = 0; i < allProducts[0].adidas.length; i++) {
             </div>
         </article>`;
 }
-document.body.append(container);
-
-const ventanaCarrito = () => {
-
-    carrito.forEach(producto => { 
-        carritoHtml.innerHTML += `
-            <article class="box-carrito">
-                <img src="${producto.url}" alt="imagen sobre ${producto.modelo}">
-                <div class="carrito-body">
-                    <p class = "x1">${producto.modelo}</p>
-                    <button onclick = "restar()" class = "x2 restar"> - </button>
-                    <p class = "x3">Unidades: ${producto.unidades}</p>
-                    <button onclick = "sumar()" class = "x4 sumar"> + </button>
-                    <button onclick = "restar()" class = "x5 restar"> - </button>
-                    <p class = "x6">Talla <b>${producto.talla}</b></p>
-                    <button onclick = "sumar()" class = "x7 sumar"> + </button>
-                    <b class = "x8">Costo: ${producto.valor}$</b>
-                    <b class = "x9">Total a pagar: ${producto.valor * producto.unidades}$</b>
-                    <button onclick = "eliminarProducto()" class = "x10">Borrar</button>
-                </div>
-            </article>`
-    });
-}
+document.body.append(container); 
 
 ventanaCarrito();
 

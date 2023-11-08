@@ -14,7 +14,8 @@ nav {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    padding: 30px;
+    gap: 30px;
+    padding-right: 10px;
 
     h5 {
         color: white;
@@ -38,6 +39,7 @@ nav {
     display: flex;
     flex-direction: column;
     gap: 30px;
+    padding: 20px;
 }
 
 .box-carrito {
@@ -142,5 +144,17 @@ nav {
         border-radius: 10px;
         border: 2px solid rgb(255, 255, 255);
         width: 100%;
+    }
+}
+
+.offcanvas-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 40px;
+
+    p {
+        margin-bottom: 0px;
     }
 }
