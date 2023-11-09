@@ -20,15 +20,15 @@ const ventanaCarrito = () => {
             <img src="${producto.url}" alt="imagen sobre ${producto.modelo}">
                 <div class="carrito-body">
                     <p class = "x1">${producto.modelo}</p>
-                    <button onclick = "restar()" class = "x2 restar"> - </button>
+                    <button onclick = "restar('${producto.id}')" class = "x2 restar"> - </button>
                     <p class = "x3">Unidades: ${producto.unidades}</p>
-                    <button onclick = "sumar()" class = "x4 sumar"> + </button>
-                    <button onclick = "restarTalla()" class = "x5 restar"> - </button>
+                    <button onclick = "sumar('${producto.id}')" class = "x4 sumar"> + </button>
+                    <button onclick = "restarTalla('${producto.id}')" class = "x5 restar"> - </button>
                     <p class = "x6">Talla <b>${producto.talla}</b></p>
-                    <button onclick = "sumarTalla()" class = "x7 sumar"> + </button>
+                    <button onclick = "sumarTalla('${producto.id}')" class = "x7 sumar"> + </button>
                     <b class = "x8">Costo: ${producto.valor}$</b>
                     <b class = "x9">Total a pagar: ${producto.valor * producto.unidades}$</b>
-                    <button onclick = "eliminarProducto()" class = "x10">Borrar</button>
+                    <button onclick = "eliminarProducto('${producto.id}')" class = "x10">Borrar</button>
                 </div>
             </article>
             `
@@ -42,9 +42,24 @@ const ventanaCarrito = () => {
     carritoBody.append(carritoFooter);
 }
 
+const eliminarProducto = (id) => {
+    const foundId = carrito.find((e) => e.id === id);
 
-const restar = () => {
-    const productId = carrito.find((p) => p.id);
+    carrito = carrito.filter((carritoId) => {
+        return carritoId !== foundId;
+    });
+
+    save();
+    ventanaCarrito();
+    
+    const botonAgregar = document.getElementById(`agregar-${id}`);
+    botonAgregar.innerHTML = "Agregar al carrito";
+    botonAgregar.disabled = false;
+    productos();
+}
+
+const restar = (id) => {
+    const productId = carrito.find((r) => r.id === id);
 
     if (productId.unidades > 1) {
         productId.unidades--
@@ -53,8 +68,8 @@ const restar = () => {
     }
 }
 
-const restarTalla = () => {
-    const productId = carrito.find((t) => t.id);
+const restarTalla = (id) => {
+    const productId = carrito.find((t) => t.id === id);
 
     if (productId.talla > 34) {
         productId.talla--
@@ -66,8 +81,8 @@ const restarTalla = () => {
     }
 }
 
-const sumar = () => {
-    const productId = carrito.find((p) => p.id);
+const sumar = (id) => {
+    const productId = carrito.find((s) => s.id === id);
     
     if (productId.unidades < 10) {
         productId.unidades++
@@ -79,8 +94,8 @@ const sumar = () => {
     }
 }
 
-const sumarTalla = () => {
-    const productId = carrito.find((t) => t.id);
+const sumarTalla = (id) => {
+    const productId = carrito.find((t) => t.id === id);
 
     if (productId.talla < 47) {
         productId.talla++
@@ -92,15 +107,12 @@ const sumarTalla = () => {
     }
 }
 
-const eliminarProducto = () => {
-    const foundId = carrito.find((e) => e.id);
-
-    carrito = carrito.filter((carritoId) => {
-        return carritoId !== foundId;
+const pusheado = () => {
+    carrito = carrito.filter((x) => {
+        const agregado = document.getElementById(`agregar-${x.id}`);
+        agregado.innerHTML = "Agregado";
+        agregado.disabled = true;
     });
-
-    save();
-    ventanaCarrito();
 }
 
 const agregarCarritoJordan = (id) => {
@@ -110,14 +122,14 @@ const agregarCarritoJordan = (id) => {
         const agregado = document.getElementById(`agregar-${id}`);
         agregado.innerHTML = "Agregado";
         agregado.disabled = true;
-        carrito.push(productoJordan)
+        carrito.push(productoJordan);
         save();
         ventanaCarrito();
     }
 }
 
 const agregarCarritoUnder = (id) => {
-    const productoUnder = underArmour.find((u) => u.id === id);
+    const productoUnder = allProducts[0].underArmour.find((u) => u.id === id);
 
     if (productoUnder && !carrito.some((i) => i.id === id)) {
         const agregado = document.getElementById(`agregar-${id}`);
@@ -130,7 +142,7 @@ const agregarCarritoUnder = (id) => {
 }
 
 const agregarCarritoPuma = (id) => {
-    const productoPuma = puma.find((p) => p.id === id);
+    const productoPuma = allProducts[0].puma.find((p) => p.id === id);
 
     if (productoPuma && !carrito.some((i) => i.id === id)) {
         const agregado = document.getElementById(`agregar-${id}`);
@@ -143,7 +155,7 @@ const agregarCarritoPuma = (id) => {
 }
 
 const agregarCarritoNike = (id) => {
-    const productoNike = nike.find((n) => n.id === id);
+    const productoNike = allProducts[0].nike.find((n) => n.id === id);
 
     if (productoNike && !carrito.some((i) => i.id === id)) {
         const agregado = document.getElementById(`agregar-${id}`);
@@ -156,7 +168,7 @@ const agregarCarritoNike = (id) => {
 }
 
 const agregarCarritoAdidas = (id) => {
-    const productoAdidas = adidas.find((a) => a.id === id);
+    const productoAdidas = allProducts[0].adidas.find((a) => a.id === id);
 
     if (productoAdidas && !carrito.some((i) => i.id === id)) {
         const agregado = document.getElementById(`agregar-${id}`);
@@ -733,7 +745,9 @@ const allProducts = [
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 // Recorridos
-// Jordan
+const productos = () => {
+// JORDAN
+
 let container = document.createElement("h1");
 container.innerHTML = "JORDAN"
 document.body.append(container);
@@ -744,7 +758,9 @@ for (let i = 0; i < allProducts[0].jordan.length; i++) {
 
     container.innerHTML += `
         <article class="box-container">
-            <img src="${allProducts[0].jordan[i].url}" alt="imagen sobre ${allProducts[0].jordan[i].modelo}">
+            <div class="box-image">
+                <img src="${allProducts[0].jordan[i].url}" alt="imagen sobre ${allProducts[0].jordan[i].modelo}">
+            </div>
             <div class="box-body">
                 <p>${allProducts[0].jordan[i].modelo}</p>
                 <b>${allProducts[0].jordan[i].valor}$</b>
@@ -755,7 +771,7 @@ for (let i = 0; i < allProducts[0].jordan.length; i++) {
 document.body.append(container);
 
 
-// Under Armour
+// UNDER ARMOUR
 container = document.createElement("h2");
 container.innerHTML = "UNDER ARMOUR"
 document.body.append(container);
@@ -766,18 +782,21 @@ for (let i = 0; i < allProducts[0].underArmour.length; i++) {
 
     container.innerHTML += `
         <article class="box-container">
-            <img src="${allProducts[0].underArmour[i].url}" alt="imagen sobre ${allProducts[0].underArmour[i].modelo}">
+            <div class="box-image">
+                <img src="${allProducts[0].underArmour[i].url}" alt="imagen sobre ${allProducts[0].underArmour[i].modelo}">
+            </div>
             <div class="box-body">
                 <p>${allProducts[0].underArmour[i].modelo}</p>
                 <b>${allProducts[0].underArmour[i].valor}$</b>
-                <button onclick = "agregarCarritoJordan('${allProducts[0].underArmour[i].id}')" id = "agregar-${allProducts[0].underArmour[i].id}">Agregar al carrito</button>
+                <button onclick = "agregarCarritoUnder('${allProducts[0].underArmour[i].id}')"id ="agregar-${allProducts[0].underArmour[i].id}">Agregar al carrito</button>
             </div>
         </article>`;
 }
 document.body.append(container);
 
 
-// Puma
+// PUMA
+
 container = document.createElement("h2");
 container.innerHTML = "PUMA"
 document.body.append(container);
@@ -788,18 +807,21 @@ for (let i = 0; i < allProducts[0].puma.length; i++) {
 
     container.innerHTML += `
         <article class="box-container">
-            <img src="${allProducts[0].puma[i].url}" alt="imagen sobre ${allProducts[0].puma[i].modelo}">
+            <div class="box-image">
+                <img src="${allProducts[0].puma[i].url}" alt="imagen sobre ${allProducts[0].puma[i].modelo}">
+            </div>
             <div class="box-body">
                 <p>${allProducts[0].puma[i].modelo}</p>
                 <b>${allProducts[0].puma[i].valor}$</b>
-                <button onclick = "agregarCarritoJordan('${allProducts[0].puma[i].id}')" id= "agregar-${allProducts[0].puma[i].id}">Agregar al carrito</button>
+                <button onclick = "agregarCarritoPuma('${allProducts[0].puma[i].id}')" id= "agregar-${allProducts[0].puma[i].id}">Agregar al carrito</button>
             </div>
         </article>`;
 }
 document.body.append(container);
 
 
-// Nike
+// NIKE
+
 container = document.createElement("h2");
 container.innerHTML = "NIKE"
 document.body.append(container);
@@ -810,18 +832,21 @@ for (let i = 0; i < allProducts[0].nike.length; i++) {
 
     container.innerHTML += `
         <article class="box-container">
-            <img src="${allProducts[0].nike[i].url}" alt="imagen sobre ${allProducts[0].nike[i].modelo}">
+            <div class="box-image">
+                <img src="${allProducts[0].nike[i].url}" alt="imagen sobre ${allProducts[0].nike[i].modelo}">
+            </div>
             <div class="box-body">
                 <p>${allProducts[0].nike[i].modelo}</p>
                 <b>${allProducts[0].nike[i].valor}$</b>
-                <button onclick = "agregarCarritoJordan('${allProducts[0].nike[i].id}')" id= "agregar-${allProducts[0].nike[i].id}">Agregar al carrito</button>
+                <button onclick = "agregarCarritoNike('${allProducts[0].nike[i].id}')" id= "agregar-${allProducts[0].nike[i].id}">Agregar al carrito</button>
             </div>
         </article>`;
 }
 document.body.append(container);
 
 
-// Adidas
+// ADIDAS
+
 container = document.createElement("h2");
 container.innerHTML = "ADIDAS"
 document.body.append(container);
@@ -832,16 +857,20 @@ for (let i = 0; i < allProducts[0].adidas.length; i++) {
 
     container.innerHTML += `
         <article class="box-container">
-            <img src="${allProducts[0].adidas[i].url}" alt="imagen sobre ${allProducts[0].adidas[i].modelo}">
+            <div class="box-image">
+                <img src="${allProducts[0].adidas[i].url}" alt="imagen sobre ${allProducts[0].adidas[i].modelo}">
+            </div>
             <div class="box-body">
                 <p>${allProducts[0].adidas[i].modelo}</p>
                 <b>${allProducts[0].adidas[i].valor}$</b>
-                <button onclick = "agregarCarritoJordan('${allProducts[0].adidas[i].id}')" id= "agregar-${allProducts[0].adidas[i].id}">Agregar al carrito</button>
+                <button onclick = "agregarCarritoAdidas('${allProducts[0].adidas[i].id}')" id= "agregar-${allProducts[0].adidas[i].id}">Agregar al carrito</button>
             </div>
         </article>`;
 }
-document.body.append(container); 
+document.body.append(container);
+}
 
+productos();
 ventanaCarrito();
-
+pusheado();
 /////////////////////////////////////////////////////////////////////////////////////////////////////

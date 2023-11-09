@@ -165,11 +165,10 @@ body h1, body h2 {
 
 .container {
   display: flex;
-  flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
-  padding: 20px 0px 20px 20px;
-  gap: 10px;
+  padding: 5px;
+  gap: 15px;
 }
 
 .box-container {
@@ -178,10 +177,18 @@ body h1, body h2 {
   width: 24%;
   background-color: rgb(0, 0, 0);
 }
-.box-container img {
+
+.box-image {
+  overflow: hidden;
+}
+.box-image img {
   width: 100%;
   height: 300px;
   object-fit: cover;
+  transition: 0.5s;
+}
+.box-image img:hover {
+  transform: scale(1.1, 1.1);
 }
 
 .box-body {
@@ -200,10 +207,13 @@ body h1, body h2 {
 }
 .box-body button {
   cursor: pointer;
-  background-color: rgb(167, 37, 253);
+  background-color: rgb(240, 228, 228);
   padding: 10px;
-  border-radius: 10px;
-  border: 2px solid rgb(255, 255, 255);
+  border: 2px solid rgb(156, 6, 6);
+  transition: 0.5s;
+}
+.box-body button:hover {
+  border-radius: 20px;
 }
 
 /*# sourceMappingURL=style.css.map */
