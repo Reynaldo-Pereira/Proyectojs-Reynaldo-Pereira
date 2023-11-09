@@ -55,7 +55,6 @@ const eliminarProducto = (id) => {
     const botonAgregar = document.getElementById(`agregar-${id}`);
     botonAgregar.innerHTML = "Agregar al carrito";
     botonAgregar.disabled = false;
-    productos();
 }
 
 const restar = (id) => {
@@ -745,7 +744,7 @@ const allProducts = [
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 // Recorridos
-const productos = () => {
+
 // JORDAN
 
 let container = document.createElement("h1");
@@ -868,7 +867,7 @@ for (let i = 0; i < allProducts[0].adidas.length; i++) {
         </article>`;
 }
 document.body.append(container);
-}
+
 
 productos();
 ventanaCarrito();
