@@ -753,20 +753,17 @@ document.body.append(container);
 
 container = document.createElement("div");
 container.className = "container";
-for (let i = 0; i < allProducts[0].jordan.length; i++) {
 
-    container.innerHTML += `
-        <article class="box-container">
-            <div class="box-image">
-                <img src="${allProducts[0].jordan[i].url}" alt="imagen sobre ${allProducts[0].jordan[i].modelo}">
-            </div>
-            <div class="box-body">
-                <p>${allProducts[0].jordan[i].modelo}</p>
-                <b>${allProducts[0].jordan[i].valor}$</b>
-                <button onclick = "agregarCarritoJordan('${allProducts[0].jordan[i].id}')" id= "agregar-${allProducts[0].jordan[i].id}">Agregar al carrito</button>
-            </div>
-        </article>`;
-}
+fetch('js/productos.json')
+    .then(res => {
+        if (!res.ok){
+            throw new Error('Error al obtener los datos');
+        }
+
+        return res.json();
+    })
+    .then(data =>console.log(data))
+
 document.body.append(container);
 
 
@@ -868,8 +865,6 @@ for (let i = 0; i < allProducts[0].adidas.length; i++) {
 }
 document.body.append(container);
 
-
-productos();
 ventanaCarrito();
 pusheado();
 /////////////////////////////////////////////////////////////////////////////////////////////////////
