@@ -1,5 +1,5 @@
 // Variables
-let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+let carrito = [];
 let carritoWindow = document.getElementById("offcanvasNavbar");
 let carritoBody = document.getElementById("offcanvas-html");
 
@@ -10,7 +10,12 @@ const save = () => {
     localStorage.setItem("carrito" , JSON.stringify(carrito));
 }
 
+const obtain = () => {
+    carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+}
+
 const ventanaCarrito = () => {
+    obtain();
     carritoBody.innerHTML = "";
     let carritoHtml = document.createElement("div");
     carritoHtml.className = "offcanvas-body";
@@ -38,11 +43,63 @@ const ventanaCarrito = () => {
     let total = carrito.reduce((acc, el) => acc + el.valor * el.unidades, 0);
     let carritoFooter = document.createElement("div");
     carritoFooter.className = "offcanvas-footer";
-    carritoFooter.innerHTML = `<p>TOTAL  ${total}$</p>`;
+    carritoFooter.innerHTML = 
+            `<div>
+                <input type= "number" id= "monto" placeholder= "Ingresar monto">
+                <button id= "boton" onclick= "ingresoMonto()">✓</button>
+            </div>
+            <p>TOTAL ${total}$</p>`;
     carritoBody.append(carritoFooter);
 }
 
+const ingresoMonto = () => {
+    obtain();
+    let total = carrito.reduce((acc, el) => acc + el.valor * el.unidades, 0);
+    let boton = document.getElementById('boton');
+    let pago = parseInt(document.getElementById('monto').value);
+    boton.innerHTML = "..."
+    
+    if (pago === 0 && total === 0){
+        setTimeout(() => {
+            boton.innerHTML = "✓";
+            Toastify({
+
+                text: "Carrito Vacio",
+                position: "center",
+                className: "info",
+                duration: 3000
+                
+                }).showToast();
+        },3000);
+    }
+
+    else if (pago === total) {
+        setTimeout(() => {
+            localStorage.clear();
+            ventanaCarrito();
+            boton.innerHTML = "✓";
+            Swal.fire({
+                title: "Compra exitosa!",
+                text: "Gracias por comprar en nuestra tienda, vuelva pronto ツ",
+                icon: "success"
+            });
+        },3000);
+    }
+
+    else {
+        setTimeout(() => {
+            boton.innerHTML = "✓";
+            Swal.fire({
+                icon: "error",
+                title: "Oops..",
+                text: "Monto incorrecto, vuelva a intentarlo",
+            });
+        },3000);
+    }
+}
+
 const eliminarProducto = (id) => {
+    obtain();
     const foundId = carrito.find((e) => e.id === id);
 
     carrito = carrito.filter((carritoId) => {
@@ -58,6 +115,7 @@ const eliminarProducto = (id) => {
 }
 
 const restar = (id) => {
+    obtain();
     const productId = carrito.find((r) => r.id === id);
 
     if (productId.unidades > 1) {
@@ -68,6 +126,7 @@ const restar = (id) => {
 }
 
 const restarTalla = (id) => {
+    obtain();
     const productId = carrito.find((t) => t.id === id);
 
     if (productId.talla > 34) {
@@ -76,11 +135,19 @@ const restarTalla = (id) => {
         ventanaCarrito();
     }
     else {
-        alert ("No tenemos esa talla");
+        Toastify({
+
+            text: "Lo siento, no tenemos de esa talla",
+            position: "center",
+            className: "info",
+            duration: 3000
+            
+            }).showToast();
     }
 }
 
 const sumar = (id) => {
+    obtain();
     const productId = carrito.find((s) => s.id === id);
     
     if (productId.unidades < 10) {
@@ -89,11 +156,19 @@ const sumar = (id) => {
         ventanaCarrito();
     }
     else {
-        alert ("No tenemos tantas unidades");
+        Toastify({
+
+            text: "Lo siento, no tenemos tantas unidades",
+            position: "center",
+            className: "info",
+            duration: 3000
+            
+            }).showToast();
     }
 }
 
 const sumarTalla = (id) => {
+    obtain();
     const productId = carrito.find((t) => t.id === id);
 
     if (productId.talla < 47) {
@@ -102,11 +177,19 @@ const sumarTalla = (id) => {
         ventanaCarrito();
     }
     else {
-        alert ("No tenemos esa talla");
+        Toastify({
+
+            text: "Lo siento, no tenemos de esa talla",
+            position: "center",
+            className: "info",
+            duration: 3000
+            
+            }).showToast();
     }
 }
 
 const pusheado = () => {
+    obtain();
     carrito = carrito.filter((x) => {
         const agregado = document.getElementById(`agregar-${x.id}`);
         agregado.innerHTML = "Agregado";
@@ -115,6 +198,7 @@ const pusheado = () => {
 }
 
 const agregarCarritoJordan = (id) => {
+    obtain();
     const productoJordan = allProducts[0].jordan.find((j) => j.id === id);
 
     if (productoJordan && !carrito.some((i) => i.id === id)) {
@@ -128,6 +212,7 @@ const agregarCarritoJordan = (id) => {
 }
 
 const agregarCarritoUnder = (id) => {
+    obtain();
     const productoUnder = allProducts[0].underArmour.find((u) => u.id === id);
 
     if (productoUnder && !carrito.some((i) => i.id === id)) {
@@ -141,6 +226,7 @@ const agregarCarritoUnder = (id) => {
 }
 
 const agregarCarritoPuma = (id) => {
+    obtain();
     const productoPuma = allProducts[0].puma.find((p) => p.id === id);
 
     if (productoPuma && !carrito.some((i) => i.id === id)) {
@@ -154,6 +240,7 @@ const agregarCarritoPuma = (id) => {
 }
 
 const agregarCarritoNike = (id) => {
+    obtain();
     const productoNike = allProducts[0].nike.find((n) => n.id === id);
 
     if (productoNike && !carrito.some((i) => i.id === id)) {
@@ -167,6 +254,7 @@ const agregarCarritoNike = (id) => {
 }
 
 const agregarCarritoAdidas = (id) => {
+    obtain();
     const productoAdidas = allProducts[0].adidas.find((a) => a.id === id);
 
     if (productoAdidas && !carrito.some((i) => i.id === id)) {
@@ -753,16 +841,6 @@ document.body.append(container);
 
 container = document.createElement("div");
 container.className = "container";
-
-fetch('js/productos.json')
-    .then(res => {
-        if (!res.ok){
-            throw new Error('Error al obtener los datos');
-        }
-
-        return res.json();
-    })
-    .then(data =>console.log(data))
 
 document.body.append(container);
 
