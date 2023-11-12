@@ -68,7 +68,7 @@ const ingresoMonto = () => {
     let pago = parseInt(document.getElementById('monto').value);
     boton.innerHTML = "..."
     
-    if (pago === 0 && total === 0){
+    if (pago === 0 && total === 0 || total === 0){
         setTimeout(() => {
             boton.innerHTML = "✓";
             Toastify({
